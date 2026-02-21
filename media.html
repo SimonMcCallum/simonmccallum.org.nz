@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media &amp; Public Engagement — Dr Simon McCallum</title>
+  <meta name="description" content="Media appearances, expert commentary, and public engagement by Dr Simon McCallum on AI, games, education, and technology.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-8);
+      padding: var(--space-4);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .filter-btn {
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      background: var(--color-bg);
+      color: var(--color-text-light);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+    .media-section-title {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      margin-top: var(--space-10);
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-3);
+      border-bottom: 2px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .media-year-group {
+      margin-bottom: var(--space-8);
+    }
+    .media-year {
+      font-size: var(--font-size-lg);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+    }
+    .badge-new {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      padding: 2px var(--space-2);
+      border-radius: var(--radius-sm);
+      background: rgba(237, 137, 54, 0.15);
+      color: var(--color-accent-dark);
+    }
+    [data-theme="dark"] .badge-new {
+      background: rgba(251, 211, 141, 0.15);
+      color: var(--color-accent);
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-10);
+    }
+    .stats-row .stat-card {
+      padding: var(--space-4);
+    }
+    .stats-row .stat-number {
+      font-size: var(--font-size-2xl);
+    }
+    @media (max-width: 768px) {
+      .stats-row {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-6);
+    }
+    .back-link:hover {
+      color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ Header ============ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-brand">
+        <span class="brand-initials">SM</span>
+        Dr Simon McCallum
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#academic">Academic</a></li>
+          <li><a href="index.html#research">Research</a></li>
+          <li><a href="index.html#ludogogy">Ludogogy</a></li>
+          <li><a href="index.html#trebuchet">Trebuchet</a></li>
+          <li><a href="media.html" class="active">Media</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9790;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: calc(var(--header-height) + var(--space-10));">
+      <div class="container">
+        <a href="index.html" class="back-link">&#8592; Back to home</a>
+
+        <div class="section-header">
+          <div class="section-label section-label--media">&#127908; Media &amp; Public Engagement</div>
+          <h1 class="section-title" style="font-size: var(--font-size-4xl);">Complete Media Archive</h1>
+          <p class="section-description">Expert commentary on AI, games, education, and technology across television, radio, print, and online media. Spanning two decades across New Zealand, Australia, Norway, and internationally.</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Total Appearances</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">7</div>
+            <div class="stat-label">Television</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Radio</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">9+</div>
+            <div class="stat-label">Print</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Online / Web</div>
+          </div>
+        </div>
+
+        <!-- Filter -->
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="tv">TV</button>
+          <button class="filter-btn" data-filter="radio">Radio</button>
+          <button class="filter-btn" data-filter="print">Print</button>
+          <button class="filter-btn" data-filter="web">Online</button>
+          <button class="filter-btn" data-filter="games">Games Industry</button>
+          <button class="filter-btn" data-filter="institutional">University</button>
+          <button class="filter-btn" data-filter="political">Political</button>
+        </div>
+
+        <!-- ===== TELEVISION ===== -->
+        <h2 class="media-section-title" data-category="tv">&#128250; Television</h2>
+
+        <div class="media-list">
+          <div class="media-item" data-type="tv">
+            <span class="media-type media-type--tv">TV</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.youtube.com/watch?v=9QzKas7lNfw" target="_blank" rel="noopener">How AI Chatbots Could Shake Up the World</a></div>
+              <div class="media-meta">TVNZ Q&amp;A &bull; March 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="tv">
+            <span class="media-type media-type--tv">TV</span>
+            <div class="media-info">
+              <div class="media-title">Contract Cheating and Blackmail</div>
+              <div class="media-meta">AM Show &bull; December 2022</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="tv">
+            <span class="media-type media-type--tv">TV</span>
+            <div class="media-info">
+              <div class="media-title">Games and Skills Learning</div>
+              <div class="media-meta">AM Show &bull; November 2022</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="tv">
+            <span class="media-type media-type--tv">TV</span>
+            <div class="media-info">
+              <div class="media-title">VR and Science Education</div>
+              <div class="media-meta">Newshub &bull; July 2018</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="tv">
+            <span class="media-type media-type--tv">TV</span>
+            <div class="media-info">
+              <div class="media-title">Virtual Reality Possibilities — Science Festival</div>
+              <div class="media-meta">Channel 39 &bull; July 2018</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="tv">
+            <span class="media-type media-type--tv">TV</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://ickosovo.com/events/all-events/virtual-reality-connecting-the-world-lecture-by-prof.-simon-mccallum" target="_blank" rel="noopener">Virtual Reality: Connecting the World</a></div>
+              <div class="media-meta">Kosovo National TV &bull; 2014</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="tv">
+            <span class="media-type media-type--tv">TV</span>
+            <div class="media-info">
+              <div class="media-title">Technology Expert Segment</div>
+              <div class="media-meta">TV1 Breakfast &bull; 2003</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== RADIO ===== -->
+        <h2 class="media-section-title" data-category="radio">&#127908; Radio</h2>
+
+        <div class="media-list">
+          <div class="media-item" data-type="radio">
+            <span class="media-type media-type--radio">Radio</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.rnz.co.nz/news/business/536787/ai-influencing-christmas-gift-buying" target="_blank" rel="noopener">AI Influencing Christmas Gift Buying</a></div>
+              <div class="media-meta">RNZ &bull; December 2024</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="radio">
+            <span class="media-type media-type--radio">Radio</span>
+            <div class="media-info">
+              <div class="media-title">Sustainability Discussion</div>
+              <div class="media-meta">Blowing Bubbles / Sustainable Lens &bull; September 2024</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="radio">
+            <span class="media-type media-type--radio">Radio</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.rnz.co.nz/news/national/521171/there-s-a-reason-those-mobile-game-ads-are-annoying-they-re-designed-that-way" target="_blank" rel="noopener">There's a Reason Those Mobile Game Ads Are Annoying</a></div>
+              <div class="media-meta">RNZ &bull; July 2024</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="radio">
+            <span class="media-type media-type--radio">Radio</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.rnz.co.nz/news/national/491085/chatgpt-might-doom-us-all-but-it-won-t-replace-teachers-expert" target="_blank" rel="noopener">ChatGPT Might Doom Us All, But It Won't Replace Teachers</a></div>
+              <div class="media-meta">RNZ &bull; May 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="radio">
+            <span class="media-type media-type--radio">Radio</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.rnz.co.nz/national/programmes/morningreport/audio/2018892425/education-ministry-warns-teachers-not-to-use-ai-to-mark-exams" target="_blank" rel="noopener">Education Ministry Warns Teachers Not to Use AI to Mark Exams</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">RNZ Morning Report &bull; May 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="radio">
+            <span class="media-type media-type--radio">Radio</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.rnz.co.nz/news/national/487360/software-to-detect-use-of-ai-systems-like-chatgpt-activated-in-new-zealand" target="_blank" rel="noopener">Software to Detect AI Systems Like ChatGPT Activated in NZ</a></div>
+              <div class="media-meta">RNZ &bull; April 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="radio">
+            <span class="media-type media-type--radio">Radio</span>
+            <div class="media-info">
+              <div class="media-title">Gamers Know the Power of 'Flow' — Audio Interview</div>
+              <div class="media-meta">ABC Radio Australia &bull; August 2021</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="radio">
+            <span class="media-type media-type--radio">Radio</span>
+            <div class="media-info">
+              <div class="media-title">Gamers Know the Power of 'Flow' — Live Chat</div>
+              <div class="media-meta">3AW Drive, Melbourne &bull; August 2021</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="radio">
+            <span class="media-type media-type--radio">Radio</span>
+            <div class="media-info">
+              <div class="media-title">Gamers Know the Power of 'Flow' — Breakfast Interview</div>
+              <div class="media-meta">Radio Adelaide &bull; August 2021</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="radio">
+            <span class="media-type media-type--radio">Radio</span>
+            <div class="media-info">
+              <div class="media-title">Net Neutrality Commentary</div>
+              <div class="media-meta">Various NZ Radio &bull; 2006</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== PRINT ===== -->
+        <h2 class="media-section-title" data-category="print">&#128240; Print / Newspapers</h2>
+
+        <div class="media-list">
+          <div class="media-item" data-type="print">
+            <span class="media-type media-type--print">Print</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.ppta.org.nz/news-and-media/ai-not-what-you-know-but-how-fast-you-can-learn/" target="_blank" rel="noopener">AI — Not What You Know But How Fast You Can Learn</a></div>
+              <div class="media-meta">PPTA Magazine &bull; June 2024</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="print">
+            <span class="media-type media-type--print">Print</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.odt.co.nz/southland/the-ensign/wellbeing-luminaries-gather-gore" target="_blank" rel="noopener">Wellbeing Luminaries Gather in Gore</a></div>
+              <div class="media-meta">Otago Daily Times &bull; May 2024</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="print">
+            <span class="media-type media-type--print">Print</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.nzherald.co.nz/bay-of-plenty-times/news/chatgpt-how-to-get-the-most-out-of-this-ai/6VQZIWIUXJFGTN6TRPYGTSAJGU/" target="_blank" rel="noopener">ChatGPT: How to Get the Most Out of This AI</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">NZ Herald / Bay of Plenty Times &bull; May 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="print">
+            <span class="media-type media-type--print">Print</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.nzherald.co.nz/nz/chatgpt-and-ai-software-to-detect-use-of-ai-systems-activated-in-new-zealand-universities/QTZGPFRYYZAZTLJAJ24YNFKZZI/" target="_blank" rel="noopener">ChatGPT: AI Detection Software Activated in NZ Universities</a></div>
+              <div class="media-meta">NZ Herald &bull; April 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="print">
+            <span class="media-type media-type--print">Print</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.thesenior.com.au/story/8162979/how-ai-has-made-cheating-widespread-in-australian-schools/" target="_blank" rel="noopener">How AI Has Made Cheating Widespread in Australian Schools</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Syndicated across Australian outlets (The Senior, Canberra Times, etc.) &bull; April 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="print">
+            <span class="media-type media-type--print">Print</span>
+            <div class="media-info">
+              <div class="media-title">Story on Coming Back to NZ</div>
+              <div class="media-meta">Otago Daily Times &bull; July 2018</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="print">
+            <span class="media-type media-type--print">Print</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.odt.co.nz/news/dunedin/computer-games-rise-elder-care-tipped" target="_blank" rel="noopener">Computer Games' Rise in Elder Care Tipped</a></div>
+              <div class="media-meta">Otago Daily Times &bull; 2012</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== ONLINE ===== -->
+        <h2 class="media-section-title" data-category="web">&#127760; Online / Web</h2>
+
+        <div class="media-list">
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.sciencemediacentre.co.nz/2025/10/20/first-ever-research-conference-led-by-ai-expert-reaction/" target="_blank" rel="noopener">First-Ever Research Conference Led By AI — Expert Reaction</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">NZ Science Media Centre / Scoop &bull; October 2025</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.royalsociety.org.nz/what-we-do/research-practice/generative-artificial-intelligence-in-research-in-aotearoa-new-zealand/" target="_blank" rel="noopener">Royal Society GenAI in Research Guidelines (contributor)</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Royal Society Te Aparangi &bull; June 2025</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.thepost.co.nz/nz-news/360856298/textbook-second-teacher-how-ai-has-changed-study" target="_blank" rel="noopener">A Textbook Second Teacher: How AI Has Changed Study</a></div>
+              <div class="media-meta">The Post &bull; 2024</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www2.nzqa.govt.nz/ncea/ncea-for-teachers-and-schools/managing-national-assessment-in-schools/ai-guidance/ai-symposium/" target="_blank" rel="noopener">The Dawn of AI — NZQA Symposium</a></div>
+              <div class="media-meta">NZQA &bull; May 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.salient.org.nz/news-2023/students-use-of-artificial-intelligence-leaves-university-in-puzzling-plagiarism-pickle" target="_blank" rel="noopener">AI Leaves University in Puzzling Plagiarism Pickle</a></div>
+              <div class="media-meta">Salient &bull; 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.stuff.co.nz/pou-tiaki/300831431/the-infernal-reo-machine-speaking-my-indigenous-language-with-new-ai" target="_blank" rel="noopener">The Infernal Reo Machine: Speaking My Indigenous Language with AI</a></div>
+              <div class="media-meta">Stuff &bull; 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.sciencemediacentre.co.nz/2023/02/10/ai-that-can-almost-pass-a-medical-licensing-exam-expert-reaction/" target="_blank" rel="noopener">AI That Can (Almost) Pass a Medical Licensing Exam — Expert Reaction</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">NZ Science Media Centre &bull; February 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.1news.co.nz/2023/03/19/kiwi-academic-oral-exams-an-alternative-in-ai-era/" target="_blank" rel="noopener">Oral Exams an Alternative in AI Era</a></div>
+              <div class="media-meta">1News &bull; March 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://theconversation.com/gamers-know-the-power-of-flow-what-if-learners-could-harness-it-too-164943" target="_blank" rel="noopener">Gamers Know the Power of 'Flow' — What if Learners Could Harness It Too?</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">The Conversation &bull; August 2021</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.sciencemediacentre.co.nz/2020/07/22/video-games-and-violence-expert-reaction/" target="_blank" rel="noopener">Video Games and Violence — Expert Reaction</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">NZ Science Media Centre &bull; July 2020</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.sciencemediacentre.co.nz/2020/05/20/govt-releases-contact-tracing-app-expert-reaction/" target="_blank" rel="noopener">Govt Releases Contact Tracing App — Expert Reaction</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">NZ Science Media Centre &bull; May 2020</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.wgtn.ac.nz/victorious/issues/victorious-2020/zoomies-and-roomies" target="_blank" rel="noopener">Zoomies and Roomies</a></div>
+              <div class="media-meta">VUW Victorious Magazine &bull; 2020</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.newsroom.co.nz/@ideasroom/2019/06/13/623428/the-robot-that-rocks-the-cradle-rules-the-world" target="_blank" rel="noopener">The Robot That Rocks the Cradle Rules the World</a></div>
+              <div class="media-meta">Newsroom &bull; June 2019</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.newshub.co.nz/home/lifestyle/2019/05/nz-expert-dismisses-link-between-video-games-and-kids-gun-use.html" target="_blank" rel="noopener">NZ Expert Dismisses Link Between Video Games and Kids' Gun Use</a></div>
+              <div class="media-meta">Newshub &bull; May 2019</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://norwegianscitechnews.com/2017/07/sharing-chalkboard-300-km-away/" target="_blank" rel="noopener">Sharing a Chalkboard from 300 km Away</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Norwegian SciTech News &bull; July 2017</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="web">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://publicaddress.net/speaker/in-the-game-1/" target="_blank" rel="noopener">In the Game — NZ's First Game Dev Course</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Public Address / 95bFM &bull; April 2004</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== GAMES INDUSTRY ===== -->
+        <h2 class="media-section-title" data-category="games">&#127918; Games Industry</h2>
+
+        <div class="media-list">
+          <div class="media-item" data-type="games">
+            <span class="media-type media-type--web">Games</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://nordicgame.com/speaker/simon-mccallum/" target="_blank" rel="noopener">Nordic Game 2025 Speaker: Vibe Coding is Changing Game Development</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Nordic Game Conference &bull; 2025</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="games">
+            <span class="media-type media-type--web">Games</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.nzgdc.com/newsroom/7dt4qwzhygd54swjs66c0vgobl5ejy" target="_blank" rel="noopener">Pioneers of Play Award</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">NZGDC &bull; 2024</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="games">
+            <span class="media-type media-type--web">Games</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://nzgda.com/news/game-on-new-zealands-next-billion-dollar-industry/" target="_blank" rel="noopener">Game On: NZ's Next Billion-Dollar Industry</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">NZGDA &bull; 2024/2025</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="games">
+            <span class="media-type media-type--web">Games</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.gamesforhealtheurope.org/speaker/simon-mccallum/" target="_blank" rel="noopener">Games for Health Europe — Speaker Profile</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Games for Health Europe &bull; Ongoing</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== UNIVERSITY/INSTITUTIONAL ===== -->
+        <h2 class="media-section-title" data-category="institutional">&#127891; University &amp; Institutional</h2>
+
+        <div class="media-list">
+          <div class="media-item" data-type="institutional">
+            <span class="media-type media-type--web">Uni</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.wgtn.ac.nz/engineering/news/celebrating-20-years-of-game-education" target="_blank" rel="noopener">Celebrating 20 Years of Game Education</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">VUW Faculty of Engineering &bull; 2024</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="institutional">
+            <span class="media-type media-type--web">Uni</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.wgtn.ac.nz/about/our-story/news-events/public-lecture-series/spotlight-series/can-ai-language-models-be-used-to-improve-the-efficiency-and-effectiveness-of-public-services" target="_blank" rel="noopener">Spotlight Lecture: Can AI Language Models Improve Public Services?</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">VUW Spotlight Series (with Ali Knott) &bull; July 2024</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="institutional">
+            <span class="media-type media-type--web">Uni</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.wgtn.ac.nz/about/our-story/news-events/public-lecture-series/public-lecture-series-events/te-herenga-waka-collaborative-debate-ai-in-the-academy" target="_blank" rel="noopener">Collaborative Debate: AI in the Academy</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">VUW Public Lecture Series &bull; 2024/2025</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="institutional">
+            <span class="media-type media-type--web">Uni</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.facebook.com/watch/?v=1269176253656156" target="_blank" rel="noopener">Standpoint</a></div>
+              <div class="media-meta">VUW / Facebook &bull; December 2022</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== POLITICAL ===== -->
+        <h2 class="media-section-title" data-category="political">&#127963;&#65039; Political Coverage</h2>
+
+        <div class="media-list">
+          <div class="media-item" data-type="political">
+            <span class="media-type media-type--print">Print</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.stuff.co.nz/southland-times/news/133060136/its-not-just-about-the-votes-for-southland-electorates-ai-guy" target="_blank" rel="noopener">It's Not Just About the Votes for Southland's AI Guy</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Stuff / Southland Times &bull; 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="political">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://crux.org.nz/crux-news/labour-selects-ai-expert-dr-simon-mccallum-for-southland" target="_blank" rel="noopener">Labour Backs AI Expert Simon McCallum for Southland</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Crux &bull; 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="political">
+            <span class="media-type media-type--print">Print</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://www.odt.co.nz/regions/southland/bringing-new-%E2%80%98perspective%E2%80%99" target="_blank" rel="noopener">Bringing New 'Perspective'</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Otago Daily Times &bull; April 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="political">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://centralapp.nz/NewsStory/campaigning-continues-next-up-dr-simon-mccallum-labour/64db1e5000997a00289faf2f" target="_blank" rel="noopener">Campaigning Continues: Dr Simon McCallum (Labour)</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Central App &bull; August 2023</div>
+            </div>
+          </div>
+          <div class="media-item" data-type="political">
+            <span class="media-type media-type--web">Web</span>
+            <div class="media-info">
+              <div class="media-title"><a href="https://policy.nz/2023/southland-electorate/candidates/simon-mccallum" target="_blank" rel="noopener">Candidate Profile — Southland Electorate</a> <span class="badge-new">NEW</span></div>
+              <div class="media-meta">Policy.nz &bull; 2023</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ Footer ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-text">&copy; 2025 Dr Simon McCallum. All rights reserved.</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="https://ludogogy.co.nz" target="_blank" rel="noopener">Ludogogy</a></li>
+          <li><a href="https://scholar.google.no/citations?hl=en&user=lCo3SMkAAAAJ" target="_blank" rel="noopener">Google Scholar</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Filter functionality
+    (function() {
+      var filterBtns = document.querySelectorAll('.filter-btn');
+      var mediaItems = document.querySelectorAll('.media-item');
+      var sectionTitles = document.querySelectorAll('.media-section-title');
+
+      filterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var filter = this.getAttribute('data-filter');
+
+          filterBtns.forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+
+          if (filter === 'all') {
+            mediaItems.forEach(function(item) { item.style.display = ''; });
+            sectionTitles.forEach(function(title) { title.style.display = ''; });
+          } else {
+            mediaItems.forEach(function(item) {
+              item.style.display = item.getAttribute('data-type') === filter ? '' : 'none';
+            });
+            sectionTitles.forEach(function(title) {
+              var cat = title.getAttribute('data-category');
+              if (cat) {
+                title.style.display = cat === filter ? '' : 'none';
+              }
+            });
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
