@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Games &amp; Game Jams — Dr Simon McCallum</title>
+  <meta name="description" content="Game jams, student projects, and interactive experiences by Dr Simon McCallum. Global Game Jam Wellington organiser. 20+ years of game education.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .section-label--games {
+      color: #e53e3e;
+      background: rgba(229, 62, 62, 0.1);
+    }
+
+    /* Game jam cards grid */
+    .jam-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+
+    .jam-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .jam-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Colored top borders for jam types */
+    .jam-card--ggj {
+      border-top: 4px solid #e53e3e;
+    }
+
+    .jam-card--gdg {
+      border-top: 4px solid #38A169;
+    }
+
+    .jam-card--kiwi {
+      border-top: 4px solid #ED8936;
+    }
+
+    .jam-card--wil {
+      border-top: 4px solid #4C51BF;
+    }
+
+    .jam-card .jam-date {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+
+    .jam-card .jam-title {
+      font-size: var(--font-size-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+      line-height: 1.3;
+    }
+
+    .jam-card .jam-theme {
+      font-size: var(--font-size-sm);
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+
+    .jam-card .jam-details {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-light);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: var(--space-4);
+    }
+
+    .jam-card .jam-entries {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-3);
+    }
+
+    .jam-card .jam-entries .entry-count {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: var(--font-size-xs);
+    }
+
+    .jam-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: auto;
+    }
+
+    .jam-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+
+    .jam-link--itch {
+      color: #fa5c5c;
+      background: rgba(250, 92, 92, 0.1);
+    }
+
+    .jam-link--itch:hover {
+      background: rgba(250, 92, 92, 0.2);
+      color: #fa5c5c;
+      text-decoration: none;
+    }
+
+    .jam-link--site {
+      color: var(--color-primary);
+      background: var(--color-primary-light);
+    }
+
+    .jam-link--site:hover {
+      background: rgba(43, 108, 176, 0.15);
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    [data-theme="dark"] .jam-link--itch {
+      background: rgba(250, 92, 92, 0.15);
+    }
+
+    [data-theme="dark"] .jam-link--itch:hover {
+      background: rgba(250, 92, 92, 0.25);
+    }
+
+    [data-theme="dark"] .jam-link--site {
+      background: rgba(99, 179, 237, 0.15);
+    }
+
+    [data-theme="dark"] .jam-link--site:hover {
+      background: rgba(99, 179, 237, 0.25);
+    }
+
+    /* Kiwi jam compact list */
+    .kiwi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+
+    .kiwi-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid #ED8936;
+      border-radius: var(--radius);
+      padding: var(--space-4) var(--space-5);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .kiwi-card:hover {
+      transform: translateX(4px);
+      box-shadow: var(--shadow);
+    }
+
+    .kiwi-card .kiwi-year {
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      color: #ED8936;
+      margin-bottom: var(--space-1);
+    }
+
+    .kiwi-card .kiwi-title {
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+
+    .kiwi-card a {
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+    }
+
+    /* Software grid */
+    .software-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+
+    .software-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      gap: var(--space-4);
+      align-items: flex-start;
+    }
+
+    .software-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .software-icon {
+      font-size: 1.75rem;
+      flex-shrink: 0;
+    }
+
+    .software-info h3 {
+      font-size: var(--font-size-base);
+      font-weight: 700;
+      margin-bottom: var(--space-1);
+    }
+
+    .software-info p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-light);
+      line-height: 1.5;
+    }
+
+    /* WIL feature card */
+    .wil-card {
+      background: linear-gradient(135deg, rgba(76, 81, 191, 0.05) 0%, var(--color-bg) 50%);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid #4C51BF;
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-md);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-8);
+      align-items: center;
+      margin-top: var(--space-8);
+    }
+
+    .wil-card h3 {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+    }
+
+    .wil-card p {
+      font-size: var(--font-size-base);
+      color: var(--color-text-light);
+      line-height: 1.7;
+      margin-bottom: var(--space-4);
+    }
+
+    .wil-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Coming soon section */
+    .coming-soon {
+      text-align: center;
+      padding: var(--space-12);
+      background: var(--color-bg);
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-xl);
+      margin-top: var(--space-8);
+    }
+
+    .coming-soon .coming-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .coming-soon h3 {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .coming-soon p {
+      color: var(--color-text-light);
+      font-size: var(--font-size-base);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Embed containers */
+    .embed-container {
+      margin-top: var(--space-6);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+    }
+
+    .embed-container iframe {
+      display: block;
+      width: 100%;
+      border: 0;
+    }
+
+    /* Hero stats row for games */
+    .games-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+
+    .games-stats .stat-card {
+      padding: var(--space-4);
+    }
+
+    .games-stats .stat-number {
+      font-size: var(--font-size-2xl);
+      color: #e53e3e;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .jam-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .kiwi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .software-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .wil-card {
+        grid-template-columns: 1fr;
+      }
+      .games-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .jam-grid {
+        grid-template-columns: 1fr;
+      }
+      .kiwi-grid {
+        grid-template-columns: 1fr;
+      }
+      .software-grid {
+        grid-template-columns: 1fr;
+      }
+      .games-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ Header ============ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-brand">
+        <span class="brand-initials">SM</span>
+        Dr Simon McCallum
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="academic.html">Academic</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="ludogogy.html">Ludogogy</a></li>
+          <li><a href="games.html" class="active">Games</a></li>
+          <li><a href="trebuchet.html">Trebuchet</a></li>
+          <li><a href="media.html">Media</a></li>
+        </ul>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9790;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ Hero / Intro ============ -->
+    <section class="hero" style="padding: var(--space-16) 0;">
+      <div class="container">
+        <a href="index.html" style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--font-size-sm); font-weight: 500; color: var(--color-text-light); margin-bottom: var(--space-6);">&#8592; Home</a>
+
+        <div class="section-header">
+          <div class="section-label section-label--games">&#127918; Games &amp; Interactive</div>
+          <h1 class="section-title" style="font-size: var(--font-size-4xl);">Games &amp; Game Jams</h1>
+          <p class="section-description">Over 20 years of game education, development, and community building. Created New Zealand's first university-level game development courses in 2004. Recipient of the <strong>Pioneers of Play</strong> award at NZGDC 2024. Global Game Jam Wellington site organiser.</p>
+        </div>
+
+        <div class="games-stats">
+          <div class="stat-card">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Years Game Education</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Game Jams Organised</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">2004</div>
+            <div class="stat-label">First NZ Game Course</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">2024</div>
+            <div class="stat-label">Pioneers of Play</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WIL Card ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--games">&#127891; Pedagogy</div>
+          <h2 class="section-title">Game Jams as Work Integrated Learning</h2>
+          <p class="section-description">Game jams are not just fun &mdash; they are a rigorous pedagogical approach combining teamwork, rapid prototyping, and creative problem-solving.</p>
+        </div>
+
+        <div class="wil-card">
+          <div>
+            <h3>Work Integrated Learning at VUW</h3>
+            <p>Victoria University of Wellington uses game jams as a core pedagogical approach in the Computer Graphics and Games major. Students form interdisciplinary teams and build complete games in 48 hours, simulating real industry crunch cycles while developing technical, creative, and collaborative skills.</p>
+            <p>This approach was first developed by Simon McCallum at Gj&oslash;vik University College in Norway in 2010, and has since been refined and embedded into the VUW curriculum as a formal work-integrated learning experience.</p>
+            <a href="https://www.wgtn.ac.nz/engineering/news/game-jams-as-work-integrated-learning" class="btn btn-secondary" target="_blank" rel="noopener">Read more at VUW &#8599;</a>
+          </div>
+          <div style="text-align: center; font-size: 4rem;">&#127891;&#127918;</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Global Game Jam Wellington ============ -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--games">&#127758; Global Game Jam</div>
+          <h2 class="section-title">Global Game Jam Wellington</h2>
+          <p class="section-description">Organised by Simon McCallum. Part of the world's largest game jam event, bringing together developers, artists, designers, and students in Wellington each January.</p>
+        </div>
+
+        <div class="jam-grid">
+          <!-- GGJ 2025 -->
+          <div class="jam-card jam-card--ggj">
+            <div class="jam-date">January 24&ndash;26, 2025</div>
+            <div class="jam-title">GGJ Wellington 2025</div>
+            <div class="jam-details">
+              Held at 139 Vivian St, Wellington. 80 capacity venue with VR equipment, controllers, and motion capture technology available for participants.
+            </div>
+            <div class="jam-links">
+              <a href="https://globalgamejam.org/jam-sites/2025/global-game-jam-wellington" class="jam-link jam-link--site" target="_blank" rel="noopener">&#127758; GGJ Site &#8599;</a>
+            </div>
+          </div>
+
+          <!-- GGJ 2024 -->
+          <div class="jam-card jam-card--ggj">
+            <div class="jam-date">January 26&ndash;28, 2024</div>
+            <div class="jam-title">GGJ Wellington 2024</div>
+            <div class="jam-entries"><span class="entry-count">11 entries</span></div>
+            <div class="jam-details">
+              Held at VUW Te Aro campus, room VS201. Eleven teams submitted completed games over the 48-hour jam.
+            </div>
+            <div class="jam-links">
+              <a href="https://itch.io/jam/global-game-jam-wellington-2024" class="jam-link jam-link--itch" target="_blank" rel="noopener">&#127922; itch.io &#8599;</a>
+            </div>
+          </div>
+
+          <!-- GGJ 2023 -->
+          <div class="jam-card jam-card--ggj">
+            <div class="jam-date">February 3&ndash;5, 2023</div>
+            <div class="jam-title">GGJ Wellington 2023</div>
+            <div class="jam-entries"><span class="entry-count">6 entries</span></div>
+            <div class="jam-details">
+              Held at Yoobee Colleges, Wellington. Six teams completed and submitted games during the weekend event.
+            </div>
+            <div class="jam-links">
+              <a href="https://itch.io/jam/global-game-jam-wellington-2023" class="jam-link jam-link--itch" target="_blank" rel="noopener">&#127922; itch.io &#8599;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- itch.io embed for GGJ 2024 -->
+        <div class="embed-container" style="margin-top: var(--space-10);">
+          <iframe src="https://itch.io/embed/jam/global-game-jam-wellington-2024" height="167" title="Global Game Jam Wellington 2024 on itch.io"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GDG Student Jams ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--games" style="color: #38A169; background: rgba(56, 161, 105, 0.1);">&#127891; Student Club</div>
+          <h2 class="section-title">GDG (Game Development Group) Student Jams</h2>
+          <p class="section-description">The Game Development Group is the VUW student club for game developers. These student-run jams complement the academic game jam programme and foster a vibrant game development community on campus.</p>
+        </div>
+
+        <div class="jam-grid">
+          <!-- GDG Jam 2024 -->
+          <div class="jam-card jam-card--gdg">
+            <div class="jam-date">April 5&ndash;7, 2024</div>
+            <div class="jam-title">THE GDG JAM 2024</div>
+            <div class="jam-theme">Theme: &ldquo;PUSH FORWARD&rdquo;</div>
+            <div class="jam-entries"><span class="entry-count" style="background: rgba(56, 161, 105, 0.1); color: #38A169;">11 entries</span></div>
+            <div class="jam-details">
+              VUW student club game jam with teams pushing creative boundaries under a forward-thinking theme.
+            </div>
+            <div class="jam-links">
+              <a href="https://itch.io/jam/the-gdg-jam" class="jam-link jam-link--itch" target="_blank" rel="noopener">&#127922; itch.io &#8599;</a>
+            </div>
+          </div>
+
+          <!-- GDG Jam 2 (2023) -->
+          <div class="jam-card jam-card--gdg">
+            <div class="jam-date">August 25&ndash;27, 2023</div>
+            <div class="jam-title">GDG Game Jam 2</div>
+            <div class="jam-theme">Theme: &ldquo;Parasites&rdquo;</div>
+            <div class="jam-entries"><span class="entry-count" style="background: rgba(56, 161, 105, 0.1); color: #38A169;">12 entries</span></div>
+            <div class="jam-details">
+              The second GDG jam of 2023, with twelve teams creating parasite-themed games over a weekend.
+            </div>
+            <div class="jam-links">
+              <a href="https://itch.io/jam/gdg-game-jam-2" class="jam-link jam-link--itch" target="_blank" rel="noopener">&#127922; itch.io &#8599;</a>
+            </div>
+          </div>
+
+          <!-- GDG Jam 1 (2023) -->
+          <div class="jam-card jam-card--gdg">
+            <div class="jam-date">March 31 &ndash; April 2, 2023</div>
+            <div class="jam-title">GDG Game Jam 1</div>
+            <div class="jam-entries"><span class="entry-count" style="background: rgba(56, 161, 105, 0.1); color: #38A169;">5 entries</span></div>
+            <div class="jam-details">
+              The inaugural GDG game jam, kickstarting the student-run jam series at VUW with five completed entries.
+            </div>
+            <div class="jam-links">
+              <a href="https://itch.io/jam/gdg-game-jam" class="jam-link jam-link--itch" target="_blank" rel="noopener">&#127922; itch.io &#8599;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- itch.io embed for GDG Jam 2024 -->
+        <div class="embed-container" style="margin-top: var(--space-10);">
+          <iframe src="https://itch.io/embed/jam/the-gdg-jam" height="167" title="THE GDG JAM 2024 on itch.io"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Kiwi Game Jams ============ -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--games" style="color: #ED8936; background: rgba(237, 137, 54, 0.1);">&#127818; National Jams</div>
+          <h2 class="section-title">Kiwi Game Jam Wellington</h2>
+          <p class="section-description">The Kiwi Game Jam is New Zealand's national game jam series. Simon McCallum has been involved in organising the Wellington site from 2016 to 2022.</p>
+        </div>
+
+        <div class="kiwi-grid">
+          <div class="kiwi-card">
+            <div class="kiwi-year">2022</div>
+            <div class="kiwi-title">KiwiJam 2022</div>
+            <a href="https://itch.io/jam/kiwijam22" target="_blank" rel="noopener">View on itch.io &#8599;</a>
+          </div>
+          <div class="kiwi-card">
+            <div class="kiwi-year">2021</div>
+            <div class="kiwi-title">KiwiJam 2021</div>
+            <a href="https://itch.io/jam/kiwijam21" target="_blank" rel="noopener">View on itch.io &#8599;</a>
+          </div>
+          <div class="kiwi-card">
+            <div class="kiwi-year">2020</div>
+            <div class="kiwi-title">KiwiJam 2020</div>
+            <a href="https://itch.io/jam/kiwijam-2020" target="_blank" rel="noopener">View on itch.io &#8599;</a>
+          </div>
+          <div class="kiwi-card">
+            <div class="kiwi-year">2019</div>
+            <div class="kiwi-title">KiwiJam 2019</div>
+            <a href="https://itch.io/jam/kiwijam19" target="_blank" rel="noopener">View on itch.io &#8599;</a>
+          </div>
+          <div class="kiwi-card">
+            <div class="kiwi-year">2017</div>
+            <div class="kiwi-title">KiwiJam 2017</div>
+            <a href="https://itch.io/jam/kiwijam17" target="_blank" rel="noopener">View on itch.io &#8599;</a>
+          </div>
+          <div class="kiwi-card">
+            <div class="kiwi-year">2016</div>
+            <div class="kiwi-title">KiwiJam Wellington 2016</div>
+            <a href="https://itch.io/jam/kiwi-game-jam-wellington-2016" target="_blank" rel="noopener">View on itch.io &#8599;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Software & Apps ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--games">&#128187; Software</div>
+          <h2 class="section-title">Software &amp; Apps</h2>
+          <p class="section-description">Applications and tools created by Simon McCallum and collaborators, spanning health, education, and civic technology.</p>
+        </div>
+
+        <div class="software-grid">
+          <div class="software-card">
+            <div class="software-icon">&#128663;</div>
+            <div class="software-info">
+              <h3>Drismo</h3>
+              <p>Driving quality mobile app. Monitors and provides feedback on driving behaviour to promote safer habits on the road.</p>
+            </div>
+          </div>
+          <div class="software-card">
+            <div class="software-icon">&#128214;</div>
+            <div class="software-info">
+              <h3>GoRaD</h3>
+              <p>Game of Reading and Discussion. Gamified reading comprehension and discussion platform for educational settings.</p>
+            </div>
+          </div>
+          <div class="software-card">
+            <div class="software-icon">&#11088;</div>
+            <div class="software-info">
+              <h3>QRate</h3>
+              <p>Question rating system. Helps educators evaluate and rank assessment questions for quality and difficulty calibration.</p>
+            </div>
+          </div>
+          <div class="software-card">
+            <div class="software-icon">&#129440;</div>
+            <div class="software-info">
+              <h3>Covid Tracer</h3>
+              <p>Contributed to the Ministry of Health Covid Tracing App used nationally during the pandemic response in New Zealand.</p>
+            </div>
+          </div>
+          <div class="software-card">
+            <div class="software-icon">&#9889;</div>
+            <div class="software-info">
+              <h3>Sparky</h3>
+              <p>Mobile mini-game designed for mental health support. Uses game mechanics to encourage positive emotional engagement.</p>
+            </div>
+          </div>
+          <div class="software-card">
+            <div class="software-icon">&#127769;</div>
+            <div class="software-info">
+              <h3>Driftoff</h3>
+              <p>An app designed to help users improve sleep quality through guided relaxation and calming interactive experiences.</p>
+            </div>
+          </div>
+          <div class="software-card">
+            <div class="software-icon">&#128154;</div>
+            <div class="software-info">
+              <h3>Rural Health</h3>
+              <p>Mental health AI support delivered via WhatsApp, providing accessible assistance to rural communities in New Zealand.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Coming Soon ============ -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="coming-soon">
+          <div class="coming-icon">&#128302;</div>
+          <h3>Coming Soon</h3>
+          <p>New games and interactive experiences are in development. Watch this space for upcoming projects from Simon McCallum &mdash; including experimental games, AI-driven experiences, and more game jam creations.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ Footer ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-text">&copy; 2025 Dr Simon McCallum. All rights reserved.</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="https://ludogogy.co.nz" target="_blank" rel="noopener">Ludogogy</a></li>
+          <li><a href="https://scholar.google.no/citations?hl=en&user=lCo3SMkAAAAJ" target="_blank" rel="noopener">Google Scholar</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -9,8 +9,50 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
-  <!-- Schema.org structured data -->
+  <style>
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-10);
+    }
+    .explore-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .explore-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+      text-decoration: none;
+      color: inherit;
+    }
+    .explore-icon { font-size: 2.5rem; margin-bottom: var(--space-4); }
+    .explore-card h3 { font-size: var(--font-size-xl); font-weight: 700; margin-bottom: var(--space-2); }
+    .explore-card p { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: 1.6; flex: 1; }
+    .explore-card .card-arrow { margin-top: var(--space-4); font-weight: 600; font-size: var(--font-size-sm); }
+    .explore-card:nth-child(1) { border-top: 4px solid var(--color-academic); }
+    .explore-card:nth-child(1) .card-arrow { color: var(--color-academic); }
+    .explore-card:nth-child(2) { border-top: 4px solid var(--color-academic); }
+    .explore-card:nth-child(2) .card-arrow { color: var(--color-academic); }
+    .explore-card:nth-child(3) { border-top: 4px solid var(--color-ludogogy); }
+    .explore-card:nth-child(3) .card-arrow { color: var(--color-ludogogy); }
+    .explore-card:nth-child(4) { border-top: 4px solid #e53e3e; }
+    .explore-card:nth-child(4) .card-arrow { color: #e53e3e; }
+    .explore-card:nth-child(5) { border-top: 4px solid var(--color-trebuchet); }
+    .explore-card:nth-child(5) .card-arrow { color: var(--color-trebuchet); }
+    .explore-card:nth-child(6) { border-top: 4px solid var(--color-media); }
+    .explore-card:nth-child(6) .card-arrow { color: var(--color-media); }
+    @media (max-width: 900px) { .explore-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .explore-grid { grid-template-columns: 1fr; } }
+  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -18,585 +60,112 @@
     "name": "Dr Simon McCallum",
     "jobTitle": "Senior Lecturer in Computer Science",
     "worksFor": [
-      {
-        "@type": "Organization",
-        "name": "Victoria University of Wellington"
-      },
-      {
-        "@type": "Organization",
-        "name": "Norwegian University of Science and Technology (NTNU)"
-      }
+      { "@type": "Organization", "name": "Victoria University of Wellington" },
+      { "@type": "Organization", "name": "Norwegian University of Science and Technology (NTNU)" }
     ],
-    "alumniOf": {
-      "@type": "Organization",
-      "name": "University of Otago"
-    },
+    "alumniOf": { "@type": "Organization", "name": "University of Otago" },
     "url": "https://simonmccallum.org.nz",
-    "sameAs": [
-      "https://scholar.google.no/citations?hl=en&user=lCo3SMkAAAAJ",
-      "https://ludogogy.co.nz"
-    ]
+    "sameAs": ["https://scholar.google.no/citations?hl=en&user=lCo3SMkAAAAJ","https://ludogogy.co.nz"]
   }
   </script>
 </head>
 <body>
-
-  <!-- ============ Header ============ -->
   <header class="site-header">
     <div class="header-inner">
-      <a href="#" class="site-brand">
-        <span class="brand-initials">SM</span>
-        Dr Simon McCallum
-      </a>
+      <a href="index.html" class="site-brand"><span class="brand-initials">SM</span> Dr Simon McCallum</a>
       <nav>
         <ul class="nav-links" id="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#academic">Academic</a></li>
-          <li><a href="#research">Research</a></li>
-          <li><a href="#ludogogy">Ludogogy</a></li>
-          <li><a href="#trebuchet">Trebuchet</a></li>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="academic.html">Academic</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="ludogogy.html">Ludogogy</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="trebuchet.html">Trebuchet</a></li>
           <li><a href="media.html">Media</a></li>
-          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <div style="display:flex;align-items:center;gap:0.5rem;">
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9790;</button>
         <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
       </div>
     </div>
   </header>
-
   <main>
-
-    <!-- ============ Hero ============ -->
+    <!-- Hero -->
     <section class="hero" id="about">
       <div class="container">
         <div class="hero-content">
           <div class="hero-text">
             <h1>Dr Simon <span>McCallum</span></h1>
-            <p class="hero-subtitle">
-              Computer Scientist specialising in Artificial Intelligence, Serious Games, and Game-Based Education. Teaching, researching, and consulting across three countries.
-            </p>
+            <p class="hero-subtitle">Computer Scientist specialising in Artificial Intelligence, Serious Games, and Game-Based Education. Teaching, researching, and consulting across three countries.</p>
             <div class="hero-roles">
-              <span class="role-tag"><span class="dot" style="background: var(--color-academic);"></span> Senior Lecturer, VUW</span>
-              <span class="role-tag"><span class="dot" style="background: #e53e3e;"></span> Associate Prof, NTNU</span>
-              <span class="role-tag"><span class="dot" style="background: var(--color-ludogogy);"></span> Founder, Ludogogy</span>
-              <span class="role-tag"><span class="dot" style="background: var(--color-accent);"></span> Adjunct, CQU Australia</span>
+              <span class="role-tag"><span class="dot" style="background:var(--color-academic)"></span> Senior Lecturer, VUW</span>
+              <span class="role-tag"><span class="dot" style="background:#e53e3e"></span> Associate Prof, NTNU</span>
+              <span class="role-tag"><span class="dot" style="background:var(--color-ludogogy)"></span> Founder, Ludogogy</span>
+              <span class="role-tag"><span class="dot" style="background:var(--color-accent)"></span> Adjunct, CQU Australia</span>
             </div>
             <div class="hero-cta">
-              <a href="#research" class="btn btn-primary">Research &amp; Work &#8595;</a>
+              <a href="research.html" class="btn btn-primary">Research &amp; Work &#8594;</a>
               <a href="https://scholar.google.no/citations?hl=en&user=lCo3SMkAAAAJ" class="btn btn-secondary" target="_blank" rel="noopener">Google Scholar &#8599;</a>
             </div>
           </div>
           <div class="hero-stats">
-            <div class="stat-card">
-              <div class="stat-number">25+</div>
-              <div class="stat-label">Years Teaching</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-number">185+</div>
-              <div class="stat-label">Publications</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-number">49</div>
-              <div class="stat-label">Postgrad Students Supervised</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-number">4</div>
-              <div class="stat-label">Teaching Excellence Awards</div>
-            </div>
+            <div class="stat-card"><div class="stat-number">25+</div><div class="stat-label">Years Teaching</div></div>
+            <div class="stat-card"><div class="stat-number">185+</div><div class="stat-label">Publications</div></div>
+            <div class="stat-card"><div class="stat-number">49</div><div class="stat-label">Postgrad Students</div></div>
+            <div class="stat-card"><div class="stat-number">4</div><div class="stat-label">Teaching Awards</div></div>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- ============ Academic Background ============ -->
-    <section class="section" id="academic">
+    <!-- Explore -->
+    <section class="section">
       <div class="container">
-        <div class="section-header">
-          <div class="section-label section-label--academic">&#127891; Academic Background</div>
-          <h2 class="section-title">Qualifications &amp; Positions</h2>
-          <p class="section-description">Over two decades of academic leadership across New Zealand, Norway, and Australia &mdash; pioneering game-based education and AI research.</p>
+        <div class="section-header" style="text-align:center;">
+          <h2 class="section-title">Explore</h2>
+          <p class="section-description" style="margin:0 auto;">Areas of expertise, projects, and public engagement.</p>
         </div>
-
-        <!-- Qualifications Timeline -->
-        <div class="grid-2" style="margin-bottom: var(--space-12);">
-          <div>
-            <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-6);">Qualifications</h3>
-            <div class="timeline">
-              <div class="timeline-item">
-                <div class="timeline-year">2007</div>
-                <div class="timeline-title">PhD in Computer Science (AI)</div>
-                <div class="timeline-subtitle">University of Otago, New Zealand</div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-year">1996</div>
-                <div class="timeline-title">BSc Honours (First Class) in Computer Science</div>
-                <div class="timeline-subtitle">University of Otago, New Zealand</div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-6);">Awards &amp; Distinctions</h3>
-            <div class="awards-list">
-              <div class="award-item">
-                <span class="award-year">2023</span>
-                <span class="award-text">Best Teacher Award &mdash; VUW Student Association</span>
-              </div>
-              <div class="award-item">
-                <span class="award-year">2022</span>
-                <span class="award-text">Teaching Excellence Award &mdash; VUW Student Association</span>
-              </div>
-              <div class="award-item">
-                <span class="award-year">2019</span>
-                <span class="award-text">Teaching Excellence Award &mdash; Victoria University of Wellington</span>
-              </div>
-              <div class="award-item">
-                <span class="award-year">2018</span>
-                <span class="award-text">Teaching Quality Award &mdash; NTNU, Norway</span>
-              </div>
-              <div class="award-item">
-                <span class="award-year">1997</span>
-                <span class="award-text">PhD Scholarship &mdash; University of Otago</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Current Positions -->
-        <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-2);">Current Positions</h3>
-        <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">Holding academic and consulting roles across three countries.</p>
-        <div class="positions-grid">
-          <div class="position-card">
-            <div class="position-icon">&#127987;&#65039;</div>
-            <div class="position-info">
-              <h3>Senior Lecturer</h3>
-              <p class="institution">Victoria University of Wellington</p>
-              <p>School of Engineering and Computer Science. Since 2018.</p>
-            </div>
-          </div>
-          <div class="position-card">
-            <div class="position-icon">&#127987;&#65039;</div>
-            <div class="position-info">
-              <h3>Associate Professor (20%)</h3>
-              <p class="institution">NTNU, Norway</p>
-              <p>Computer Science Department. Since 2018.</p>
-            </div>
-          </div>
-          <div class="position-card">
-            <div class="position-icon">&#127987;&#65039;</div>
-            <div class="position-info">
-              <h3>Adjunct Senior Lecturer</h3>
-              <p class="institution">Central Queensland University, Australia</p>
-              <p>Faculty of Education. Since 2023.</p>
-            </div>
-          </div>
-          <div class="position-card">
-            <div class="position-icon">&#128161;</div>
-            <div class="position-info">
-              <h3>Founder</h3>
-              <p class="institution">Ludogogy</p>
-              <p>Education and AI Consultancy. Since 2021.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Employment History -->
-        <details style="margin-top: var(--space-8);">
-          <summary style="cursor: pointer; font-weight: 600; font-size: var(--font-size-lg); color: var(--color-primary); padding: var(--space-3) 0;">View Full Employment History</summary>
-          <div class="timeline" style="margin-top: var(--space-6);">
-            <div class="timeline-item">
-              <div class="timeline-year">2021 &ndash; 2022</div>
-              <div class="timeline-title">Education Advisor</div>
-              <div class="timeline-subtitle">32Stylus, New Zealand</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-year">2016 &ndash; 2018</div>
-              <div class="timeline-title">Associate Professor</div>
-              <div class="timeline-subtitle">NTNU, Norway</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-year">2009 &ndash; 2016</div>
-              <div class="timeline-title">Associate Professor</div>
-              <div class="timeline-subtitle">Gj&oslash;vik University College, Norway</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-year">2008 &ndash; 2009</div>
-              <div class="timeline-title">Associate Professor</div>
-              <div class="timeline-subtitle">Hedmark University College, Norway</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-year">2007 &ndash; 2008</div>
-              <div class="timeline-title">Systems &amp; Game Developer</div>
-              <div class="timeline-subtitle">ESP AS &amp; Chord AS, Norway</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-year">2000 &ndash; 2006</div>
-              <div class="timeline-title">Lecturer in Computer Science</div>
-              <div class="timeline-subtitle">University of Otago, New Zealand</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-year">1995 &ndash; 2000</div>
-              <div class="timeline-title">Teaching Fellow &amp; Tutor</div>
-              <div class="timeline-subtitle">University of Otago, New Zealand</div>
-            </div>
-          </div>
-        </details>
-      </div>
-    </section>
-
-    <!-- ============ Research ============ -->
-    <section class="section section--alt" id="research">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label section-label--academic">&#128300; Research</div>
-          <h2 class="section-title">Research Expertise</h2>
-          <p class="section-description">Bridging artificial intelligence, game design, and education to address real-world societal challenges.</p>
-        </div>
-
-        <div class="research-grid">
-          <div class="research-card">
-            <div class="research-icon">&#129302;</div>
-            <h3>Artificial Intelligence</h3>
-            <p>AI in education, neural network confidence, LLMs for public services, and AI ethics. Consulting with NZ government agencies on AI policy.</p>
-          </div>
-          <div class="research-card">
-            <div class="research-icon">&#127918;</div>
-            <h3>Serious Games</h3>
-            <p>Games for cognitive health, mental health, autism, ADHD, dementia, and epilepsy. Gamification of energy use and education incentives.</p>
-          </div>
-          <div class="research-card">
-            <div class="research-icon">&#127891;</div>
-            <h3>Computer Science Education</h3>
-            <p>Created NZ's first university game development courses in 2004. Innovative assessment including confidence-based marking systems.</p>
-          </div>
-          <div class="research-card">
-            <div class="research-icon">&#128083;</div>
-            <h3>Virtual Reality</h3>
-            <p>VR for medical isolation support, combating loneliness in migrant communities, collaborative learning, and simulation sickness research.</p>
-          </div>
-          <div class="research-card">
-            <div class="research-icon">&#128202;</div>
-            <h3>Game Design &amp; Development</h3>
-            <p>HCI, software architecture, graphics programming, GPU programming, and game analytics. Authored book chapter on web-based game telemetry.</p>
-          </div>
-          <div class="research-card">
-            <div class="research-icon">&#128736;</div>
-            <h3>Experimental Archaeology</h3>
-            <p>Built 13 traction trebuchets over 9 years. Published in EXARC Journal. Presented at medieval festivals in Norway and Denmark.</p>
-          </div>
-        </div>
-
-        <!-- Key Consultancies -->
-        <div style="margin-top: var(--space-12);">
-          <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-4);">Government &amp; Industry Consulting</h3>
-          <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">Active advisory and consulting roles with public and private organisations.</p>
-          <div class="grid-3">
-            <div class="card card--accent-left card--academic">
-              <div class="card-title">NZ Government</div>
-              <div class="card-text">Ministry of Education, NZQA, TEC, Reserve Bank, DIA, MBIE, Ministry of Health, Statistics NZ, and ACC.</div>
-            </div>
-            <div class="card card--accent-left card--academic">
-              <div class="card-title">International</div>
-              <div class="card-text">KLM Airlines, L'Or&eacute;al UK, Fraunhofer IDT Germany, University of Groningen, Coventry University, Tallinn University.</div>
-            </div>
-            <div class="card card--accent-left card--academic">
-              <div class="card-title">NZ Industry</div>
-              <div class="card-text">Flick Electrical, IBM NZ, Inspera, Business South, PPTA, Gore Health, Norsk Tipping, and NZ Police College.</div>
-            </div>
-          </div>
+        <div class="explore-grid">
+          <a href="academic.html" class="explore-card">
+            <div class="explore-icon">&#127891;</div>
+            <h3>Academic Background</h3>
+            <p>PhD (AI), University of Otago. 25+ years teaching across NZ, Norway, and Australia. Four teaching excellence awards. 49 postgraduate students supervised.</p>
+            <div class="card-arrow">View qualifications &amp; positions &#8594;</div>
+          </a>
+          <a href="research.html" class="explore-card">
+            <div class="explore-icon">&#128300;</div>
+            <h3>Research</h3>
+            <p>AI in education, serious games for health, VR for collaboration, game analytics, and confidence-based marking. Consulting with NZ government agencies on AI policy.</p>
+            <div class="card-arrow">View research areas &#8594;</div>
+          </a>
+          <a href="ludogogy.html" class="explore-card">
+            <div class="explore-icon">&#127922;</div>
+            <h3>Ludogogy</h3>
+            <p>AI and Game Consultation. Making free learning fun again. Helping organisations navigate the intersection of AI, gamification, and education.</p>
+            <div class="card-arrow">Visit ludogogy &#8594;</div>
+          </a>
+          <a href="games.html" class="explore-card">
+            <div class="explore-icon">&#127918;</div>
+            <h3>Games</h3>
+            <p>Game jams, student projects, and interactive experiences. Global Game Jam Wellington organiser. 20+ years of game education including NZ's first university game courses.</p>
+            <div class="card-arrow">Browse games &amp; jams &#8594;</div>
+          </a>
+          <a href="trebuchet.html" class="explore-card">
+            <div class="explore-icon">&#9876;&#65039;</div>
+            <h3>Traction Trebuchet</h3>
+            <p>13 medieval traction trebuchets built over 9 years. Experimental archaeology challenging conventional wisdom about siege weapons. Published in EXARC Journal.</p>
+            <div class="card-arrow">Read the research &#8594;</div>
+          </a>
+          <a href="media.html" class="explore-card">
+            <div class="explore-icon">&#127908;</div>
+            <h3>Media &amp; Press</h3>
+            <p>50+ media appearances across TV, radio, print, and online. Expert commentary on AI, games, education, and technology for RNZ, TVNZ, NZ Herald, and more.</p>
+            <div class="card-arrow">View media archive &#8594;</div>
+          </a>
         </div>
       </div>
     </section>
-
-    <!-- ============ Ludogogy ============ -->
-    <section class="section" id="ludogogy">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label section-label--ludogogy">&#127922; Ludogogy</div>
-          <h2 class="section-title">Ludogogy &mdash; Learning with Engagement</h2>
-          <p class="section-description">AI and Game Consultation. Making free learning fun again and helping organisations navigate the intersection of AI and education.</p>
-        </div>
-
-        <div class="ludogogy-intro">
-          <div>
-            <p style="font-size: var(--font-size-lg); color: var(--color-text-light); line-height: 1.7; margin-bottom: var(--space-6);">
-              <strong style="color: var(--color-text);">Ludogogy</strong> (from Latin <em>ludus</em> &mdash; play/game + Greek <em>-gogy</em> &mdash; leading/teaching) is Dr McCallum's consultancy specialising in gamification and AI interventions for organisations. With 25 years of experience in AI and game development, it bridges the gap between cutting-edge research and practical application.
-            </p>
-            <p style="font-size: var(--font-size-lg); color: var(--color-text-light); line-height: 1.7; margin-bottom: var(--space-6);">
-              Generative AI lets people produce human-like output with less effort &mdash; but this risks undermining genuine learning. Ludogogy helps organisations understand how AI can improve productivity while keeping learning meaningful and engaging.
-            </p>
-            <a href="https://ludogogy.co.nz" class="btn btn-secondary" target="_blank" rel="noopener">Visit ludogogy.co.nz &#8599;</a>
-          </div>
-          <div class="ludogogy-sidebar">
-            <div class="sidebar-title">Expertise Areas</div>
-            <ul class="sidebar-list">
-              <li>AI consultation for government &amp; industry</li>
-              <li>Gamification strategy and design</li>
-              <li>AI in education &mdash; policy and practice</li>
-              <li>Prompt engineering frameworks</li>
-              <li>Confidence-based assessment systems</li>
-              <li>Game-based learning design</li>
-              <li>VR &amp; immersive technology consulting</li>
-            </ul>
-          </div>
-        </div>
-
-        <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-6);">Recent Writing</h3>
-        <div class="ludogogy-articles">
-          <div class="article-card">
-            <div class="article-date">March 2025</div>
-            <div class="article-title">Prompt Engineering, Prompt Craft, and Prompt Poetry: Communicating with AI Models</div>
-            <div class="article-excerpt">
-              A three-tiered framework for AI prompting: systematic engineering for repeatable results, practical craft adapted to specific contexts, and creative poetry for exceptional outcomes. "Prompting is etiquette for AI."
-            </div>
-            <a href="https://ludogogy.co.nz/index.php/2025/03/06/prompt-engineering-prompt-craft-and-prompt-poetry-communicating-with-ai-models/" class="article-link" target="_blank" rel="noopener">Read article &#8594;</a>
-          </div>
-          <div class="article-card">
-            <div class="article-date">February 2025</div>
-            <div class="article-title">The AI Paradox: When Efficiency Undermines Learning</div>
-            <div class="article-excerpt">
-              Traditional education assumes effort produces learning, but AI enables polished output with minimal cognitive investment. The solution: refocus on intrinsic motivation and recognise that "struggle is part of the fun."
-            </div>
-            <a href="https://ludogogy.co.nz/index.php/2025/02/12/the-ai-paradox-when-efficiency-undermines-learning/" class="article-link" target="_blank" rel="noopener">Read article &#8594;</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ Traction Trebuchet ============ -->
-    <section class="section section--alt" id="trebuchet">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label section-label--trebuchet">&#9876;&#65039; Experimental Archaeology</div>
-          <h2 class="section-title">Traction Trebuchet Research</h2>
-          <p class="section-description">Nine years, thirteen builds: challenging assumptions about medieval siege weapons through hands-on experimental archaeology.</p>
-        </div>
-
-        <div class="trebuchet-hero">
-          <h3>Challenging Conventional Wisdom</h3>
-          <p>
-            Common assumptions hold that traction trebuchets required extensive logistical support, trained crews, and expert craftsmen. Our research &mdash; published in the <em>EXARC Journal of Experimental Archaeology</em> &mdash; demonstrates that smaller traction trebuchets were in fact simple, rapidly constructed weapons that anyone with basic axe skills could build and operate.
-          </p>
-          <p>
-            Working with a team of computer science students, craftsmen, and volunteers, we constructed 13 traction trebuchets between 2008 and 2017 at university grounds, the Medieval Festival at Hamar (Norway), and Middelaldercenteret in Denmark &mdash; including one built entirely with period hand tools.
-          </p>
-        </div>
-
-        <div class="trebuchet-specs">
-          <div class="spec-card">
-            <div class="spec-icon">&#128296;</div>
-            <div class="spec-value">13</div>
-            <div class="spec-label">Machines Built</div>
-          </div>
-          <div class="spec-card">
-            <div class="spec-icon">&#127919;</div>
-            <div class="spec-value">~80m</div>
-            <div class="spec-label">Consistent Range (2&ndash;4 kg)</div>
-          </div>
-          <div class="spec-card">
-            <div class="spec-icon">&#9201;</div>
-            <div class="spec-value">~20s</div>
-            <div class="spec-label">Per Projectile</div>
-          </div>
-          <div class="spec-card">
-            <div class="spec-icon">&#128101;</div>
-            <div class="spec-value">6+1</div>
-            <div class="spec-label">Crew (Pullers + Sling)</div>
-          </div>
-        </div>
-
-        <div class="trebuchet-content">
-          <div class="trebuchet-text">
-            <h3>Historical Context</h3>
-            <p>
-              The first known European description of a traction trebuchet comes from Thessalonika in the late sixth century, where a raiding Avar army built siege engines on-site in just one to three days. In western Europe, the first probable description is from the Siege of Paris (885&ndash;886), where Frankish defenders built <em>mangana</em> in watchtowers to repel Viking attackers.
-            </p>
-            <p>
-              Medieval depictions in the Maciejowski Bible (mid-13th century) and building instructions by Al-Tarsusi show machines that are simpler than the later, more famous counterweight trebuchets. Our experiments confirm that these were rapid-fire anti-personnel weapons &mdash; a fundamentally different tactical role.
-            </p>
-          </div>
-          <div class="trebuchet-text">
-            <h3>Key Findings</h3>
-            <p>
-              <strong>Build time:</strong> 12&ndash;30 hours depending on tools and crew experience. A team with basic carpentry skills could build one in under two days, consistent with historical accounts.
-            </p>
-            <p>
-              <strong>Rate of fire:</strong> Approximately 4 projectiles per minute &mdash; roughly 30 projectiles in the time needed to load and fire one shot from a small counterweight trebuchet.
-            </p>
-            <p>
-              <strong>Mobility:</strong> Completed machines could be moved by just 9 people (the operational crew plus two). They could be built out of range of fortification artillery, then quickly positioned where needed.
-            </p>
-            <p>
-              <strong>Reliability:</strong> Remarkably consistent throws within a 5m spread after initial adjustment. Green wood construction prevents catastrophic failure &mdash; machines slump rather than collapse when damaged.
-            </p>
-          </div>
-        </div>
-
-        <!-- Machine Components -->
-        <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-6); color: var(--color-trebuchet);">Machine Components</h3>
-        <div class="grid-2" style="margin-bottom: var(--space-10);">
-          <div class="trebuchet-components">
-            <div class="component-item">
-              <span class="component-name">Base</span>
-              <span class="component-desc">Two long runners with vertical uprights, supported by triangular bracing. Strongest bracing on the back side where the crew pulls.</span>
-            </div>
-            <div class="component-item">
-              <span class="component-name">Axle</span>
-              <span class="component-desc">Short rounded log (~150 cm long, ~10 cm diameter) spanning the uprights with a flat notch for the arm.</span>
-            </div>
-            <div class="component-item">
-              <span class="component-name">Throwing Arm</span>
-              <span class="component-desc">The most critical component. Green wood, placed on top of (not through) the axle to retain full strength. 3&ndash;6.5 m length.</span>
-            </div>
-          </div>
-          <div class="trebuchet-components">
-            <div class="component-item">
-              <span class="component-name">Arm Bracing</span>
-              <span class="component-desc">Vertical ("axe-style") orientation aligned with stress direction, supporting the arm and wedging the axle in place.</span>
-            </div>
-            <div class="component-item">
-              <span class="component-name">Sling &amp; Hook</span>
-              <span class="component-desc">Simple leather sling with loop fitting onto a bendable metal release hook. Hook angle adjusts the release point for aiming.</span>
-            </div>
-            <div class="component-item">
-              <span class="component-name">Pulling Ropes</span>
-              <span class="component-desc">Six ropes for a standard crew, expandable to twelve. All pullers pull inline with arm rotation &mdash; no twisting force.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="trebuchet-citation">
-          <strong>Citation:</strong> Hjelsvold, S. &amp; McCallum, S. (2018). "Traction Trebuchet." <em>EXARC Journal</em>, Issue 2018/3.
-          <a href="https://exarc.net/issue-2018-3/at/traction-trebuchet" target="_blank" rel="noopener">Read the full article at exarc.net &#8599;</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ Media ============ -->
-    <section class="section" id="media">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label section-label--media">&#127908; Media &amp; Public Engagement</div>
-          <h2 class="section-title">In the Media</h2>
-          <p class="section-description">Regular expert commentary on AI, games, education, and technology across television, radio, and print.</p>
-        </div>
-
-        <div class="media-list">
-          <div class="media-item">
-            <span class="media-type media-type--radio">Radio</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.rnz.co.nz/news/business/536787/ai-influencing-christmas-gift-buying" target="_blank" rel="noopener">AI Influencing Christmas Gift Buying</a></div>
-              <div class="media-meta">RNZ &bull; December 2024</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--radio">Radio</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.rnz.co.nz/news/national/521171/there-s-a-reason-those-mobile-game-ads-are-annoying-they-re-designed-that-way" target="_blank" rel="noopener">There's a Reason Those Mobile Game Ads Are Annoying</a></div>
-              <div class="media-meta">RNZ &bull; July 2024</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--print">Print</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.ppta.org.nz/news-and-media/ai-not-what-you-know-but-how-fast-you-can-learn/" target="_blank" rel="noopener">AI &mdash; Not What You Know But How Fast You Can Learn</a></div>
-              <div class="media-meta">PPTA Magazine &bull; June 2024</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--tv">TV</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.youtube.com/watch?v=9QzKas7lNfw" target="_blank" rel="noopener">How AI Chatbots Could Shake Up the World</a></div>
-              <div class="media-meta">TVNZ Q&amp;A &bull; March 2023</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--radio">Radio</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.rnz.co.nz/news/national/491085/chatgpt-might-doom-us-all-but-it-won-t-replace-teachers-expert" target="_blank" rel="noopener">ChatGPT Might Doom Us All, But It Won't Replace Teachers</a></div>
-              <div class="media-meta">RNZ &bull; May 2023</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--radio">Radio</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.rnz.co.nz/news/national/487360/software-to-detect-use-of-ai-systems-like-chatgpt-activated-in-new-zealand" target="_blank" rel="noopener">Software to Detect AI Systems Like ChatGPT Activated in NZ</a></div>
-              <div class="media-meta">RNZ &bull; April 2023</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--print">Print</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.nzherald.co.nz/nz/chatgpt-and-ai-software-to-detect-use-of-ai-systems-activated-in-new-zealand-universities/QTZGPFRYYZAZTLJAJ24YNFKZZI/" target="_blank" rel="noopener">ChatGPT: AI Detection Software Activated in NZ Universities</a></div>
-              <div class="media-meta">NZ Herald &bull; April 2023</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--web">Web</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.1news.co.nz/2023/03/19/kiwi-academic-oral-exams-an-alternative-in-ai-era/" target="_blank" rel="noopener">Oral Exams an Alternative in AI Era</a></div>
-              <div class="media-meta">1News &bull; March 2023</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--tv">TV</span>
-            <div class="media-info">
-              <div class="media-title">Contract Cheating and Blackmail</div>
-              <div class="media-meta">AM Show &bull; December 2022</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--tv">TV</span>
-            <div class="media-info">
-              <div class="media-title">Games and Skills Learning</div>
-              <div class="media-meta">AM Show &bull; November 2022</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--web">Web</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.newsroom.co.nz/@ideasroom/2019/06/13/623428/the-robot-that-rocks-the-cradle-rules-the-world" target="_blank" rel="noopener">The Robot That Rocks the Cradle Rules the World</a></div>
-              <div class="media-meta">Newsroom &bull; June 2019</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--web">Web</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.newshub.co.nz/home/lifestyle/2019/05/nz-expert-dismisses-link-between-video-games-and-kids-gun-use.html" target="_blank" rel="noopener">NZ Expert Dismisses Link Between Video Games and Kids' Gun Use</a></div>
-              <div class="media-meta">Newshub &bull; May 2019</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--radio">Radio</span>
-            <div class="media-info">
-              <div class="media-title">Gamers Know the Power of 'Flow' &mdash; Audio Interview</div>
-              <div class="media-meta">ABC Radio Australia &bull; August 2021</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--radio">Radio</span>
-            <div class="media-info">
-              <div class="media-title">Gamers Know the Power of 'Flow' &mdash; Live Chat</div>
-              <div class="media-meta">3AW Drive, Melbourne &bull; August 2021</div>
-            </div>
-          </div>
-          <div class="media-item">
-            <span class="media-type media-type--print">Print</span>
-            <div class="media-info">
-              <div class="media-title"><a href="https://www.odt.co.nz/news/dunedin/computer-games-rise-elder-care-tipped" target="_blank" rel="noopener">Computer Games' Rise in Elder Care Tipped</a></div>
-              <div class="media-meta">Otago Daily Times &bull; 2012</div>
-            </div>
-          </div>
-        </div>
-
-        <div style="text-align: center; margin-top: var(--space-8);">
-          <a href="media.html" class="btn btn-primary">View Complete Media Archive &#8594;</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ Contact ============ -->
+    <!-- Contact -->
     <section class="section section--alt" id="contact">
       <div class="container">
         <div class="section-header">
@@ -604,30 +173,14 @@
           <h2 class="section-title">Get in Touch</h2>
           <p class="section-description">For academic collaboration, consulting enquiries, or media requests.</p>
         </div>
-
         <div class="contact-grid">
-          <div class="contact-card">
-            <div class="contact-icon">&#128231;</div>
-            <h3>Email</h3>
-            <p><a href="mailto:simon.mccallum@gmail.com">simon.mccallum@gmail.com</a></p>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon">&#127891;</div>
-            <h3>Google Scholar</h3>
-            <p><a href="https://scholar.google.no/citations?hl=en&user=lCo3SMkAAAAJ" target="_blank" rel="noopener">View publications</a></p>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon">&#128161;</div>
-            <h3>Ludogogy</h3>
-            <p><a href="https://ludogogy.co.nz" target="_blank" rel="noopener">ludogogy.co.nz</a></p>
-          </div>
+          <div class="contact-card"><div class="contact-icon">&#128231;</div><h3>Email</h3><p><a href="mailto:simon.mccallum@gmail.com">simon.mccallum@gmail.com</a></p></div>
+          <div class="contact-card"><div class="contact-icon">&#127891;</div><h3>Google Scholar</h3><p><a href="https://scholar.google.no/citations?hl=en&user=lCo3SMkAAAAJ" target="_blank" rel="noopener">View publications</a></p></div>
+          <div class="contact-card"><div class="contact-icon">&#128161;</div><h3>Ludogogy</h3><p><a href="https://ludogogy.co.nz" target="_blank" rel="noopener">ludogogy.co.nz</a></p></div>
         </div>
       </div>
     </section>
-
   </main>
-
-  <!-- ============ Footer ============ -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-content">
@@ -640,7 +193,6 @@
       </div>
     </div>
   </footer>
-
   <script src="script.js"></script>
 </body>
 </html>
