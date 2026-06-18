@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PvEBot: Players vs Enemy | Dr Simon McCallum</title>
+  <meta name="description" content="PvEBot is a Discord community safety bot for New Zealand gaming communities. Research-grounded detection, graduated response, and rehabilitation pathways, built on Dr Simon McCallum's work on the gaming-extremism nexus.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* --- PvEBot page-specific --- */
+    :root { --color-pvebot: #c4262e; --color-pvebot-light: #fff1f1; }
+    [data-theme="dark"] { --color-pvebot-light: #3a1414; }
+
+    .section-label--pvebot {
+      background: var(--color-pvebot-light);
+      color: var(--color-pvebot);
+    }
+    /* Let the hero subtitle and intro paragraphs span the full container width */
+    #pvebot-page .section-description,
+    #pvebot-page .intro-prose p {
+      max-width: none;
+    }
+    .intro-prose p {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-light);
+      line-height: 1.7;
+      margin-bottom: var(--space-5);
+    }
+    .pvebot-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+      margin-bottom: var(--space-10);
+    }
+
+    .stat-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+      margin: var(--space-8) 0;
+    }
+    @media (max-width: 900px) { .stat-grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .stat-grid-4 { grid-template-columns: 1fr; } }
+
+    .stat-card.pvebot-stat .stat-number { color: var(--color-pvebot); }
+
+    .analyser-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin-top: var(--space-6);
+    }
+    @media (max-width: 900px) { .analyser-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .analyser-grid { grid-template-columns: 1fr; } }
+
+    .analyser-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-pvebot);
+      border-radius: var(--radius);
+      padding: var(--space-5);
+    }
+    .analyser-card .weight {
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-pvebot);
+      margin-bottom: var(--space-2);
+    }
+    .analyser-card h4 {
+      font-size: var(--font-size-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+    .analyser-card p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+
+    .level-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-6);
+      font-size: var(--font-size-sm);
+    }
+    .level-table th, .level-table td {
+      padding: var(--space-3) var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .level-table th {
+      background: var(--color-bg-section);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: var(--font-size-xs);
+      letter-spacing: 0.05em;
+      color: var(--color-text-light);
+    }
+    .level-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: var(--font-size-xs);
+      color: #fff;
+    }
+    .lvl-0 { background: #6b7280; }
+    .lvl-1 { background: #22c55e; }
+    .lvl-2 { background: #84cc16; }
+    .lvl-3 { background: #eab308; }
+    .lvl-4 { background: #f97316; }
+    .lvl-5 { background: #ef4444; }
+    .lvl-6 { background: #991b1b; }
+    .auto-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+    }
+    .auto-tag.auto { background: #ecfdf5; color: #065f46; }
+    .auto-tag.mod { background: #fff7ed; color: #9a3412; }
+    [data-theme="dark"] .auto-tag.auto { background: #064e3b; color: #d1fae5; }
+    [data-theme="dark"] .auto-tag.mod { background: #7c2d12; color: #ffedd5; }
+
+    .mana-callout {
+      background: var(--color-pvebot-light);
+      border-left: 4px solid var(--color-pvebot);
+      border-radius: var(--radius);
+      padding: var(--space-6);
+      margin: var(--space-6) 0;
+      font-style: italic;
+      font-size: var(--font-size-lg);
+      line-height: 1.7;
+      color: var(--color-text);
+    }
+    .mana-callout strong { font-style: normal; font-weight: 700; display: block; margin-bottom: var(--space-2); color: var(--color-pvebot); }
+
+    .apply-form {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow);
+      margin-top: var(--space-6);
+    }
+    .apply-form label {
+      display: block;
+      font-weight: 600;
+      font-size: var(--font-size-sm);
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+      margin-top: var(--space-5);
+    }
+    .apply-form label:first-of-type { margin-top: 0; }
+    .apply-form input[type="text"],
+    .apply-form input[type="email"],
+    .apply-form input[type="number"],
+    .apply-form textarea {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      background: var(--color-bg-alt);
+      color: var(--color-text);
+      font-family: inherit;
+      font-size: var(--font-size-base);
+      transition: border-color var(--transition-fast);
+      box-sizing: border-box;
+    }
+    .apply-form textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+    .apply-form input:focus, .apply-form textarea:focus {
+      outline: none;
+      border-color: var(--color-pvebot);
+      box-shadow: 0 0 0 3px var(--color-pvebot-light);
+    }
+    .apply-form .hint {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+    .apply-form .checkbox-row {
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-start;
+      margin-top: var(--space-6);
+    }
+    .apply-form .checkbox-row input { margin-top: 4px; }
+    .apply-form .checkbox-row label {
+      margin: 0;
+      font-weight: 400;
+      color: var(--color-text-light);
+      font-size: var(--font-size-sm);
+      line-height: 1.5;
+    }
+    .apply-form button {
+      margin-top: var(--space-6);
+      background: var(--color-pvebot);
+      color: #fff;
+      border: none;
+      padding: var(--space-3) var(--space-8);
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: var(--font-size-base);
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+    .apply-form button:hover { background: #991b1b; }
+
+    .page-toc {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-5);
+      margin-bottom: var(--space-8);
+    }
+    .page-toc strong {
+      font-size: var(--font-size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      display: block;
+      margin-bottom: var(--space-3);
+    }
+    .page-toc a {
+      display: inline-block;
+      margin-right: var(--space-5);
+      margin-bottom: var(--space-2);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      color: var(--color-text-light);
+      text-decoration: none;
+    }
+    .page-toc a:hover { color: var(--color-pvebot); }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+    @media (max-width: 700px) { .values-grid { grid-template-columns: 1fr; } }
+    .value-card {
+      background: var(--color-bg-alt);
+      border-radius: var(--radius);
+      padding: var(--space-5);
+      border-left: 3px solid var(--color-pvebot);
+    }
+    .value-card .value-title { font-weight: 700; margin-bottom: var(--space-1); font-size: var(--font-size-base); }
+    .value-card .value-meaning { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: 1.5; }
+
+    .anchor-target {
+      scroll-margin-top: calc(var(--header-height) + var(--space-6));
+    }
+  </style>
+</head>
+<body id="pvebot-page">
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-brand">
+        <span class="brand-initials">SM</span>
+        Dr Simon McCallum
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="academic.html">Academic</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="pvebot.html" class="active">PvEBot</a></li>
+          <li><a href="ludogogy.html">Ludogogy</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="trebuchet.html">Trebuchet</a></li>
+          <li><a href="media.html">Media</a></li>
+        </ul>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9790;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: calc(var(--header-height) + var(--space-10));">
+      <div class="container">
+        <a href="index.html" class="back-link" style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--font-size-sm); font-weight: 500; color: var(--color-text-light); margin-bottom: var(--space-6);">&#8592; Home</a>
+
+        <div class="section-header">
+          <div class="section-label section-label--pvebot">&#128737;&#65039; PvEBot</div>
+          <h1 class="section-title" style="font-size: var(--font-size-4xl);">PvEBot: Players vs Enemy</h1>
+          <p class="section-description">A Discord community safety bot grounded in New Zealand extremism-prevention research. In <em>PvE</em>, the whole community cooperates against a shared threat. Here that threat is toxicity, harassment, and extremist recruitment, not the players themselves.</p>
+        </div>
+
+        <div class="intro-prose">
+          <p>
+            PvEBot began as <em>PVEbot</em>, a research deliverable to the Department of the Prime Minister and Cabinet on the gaming-extremism nexus. The research is prepared; the bot is being piloted with a small number of New Zealand game developer communities. The rename to <strong>PvEBot</strong> reframes it for the people it serves. Game communities know <em>PvE</em> as the mode where the whole party works together against a shared enemy. In community safety, that enemy is the pattern of behaviour that dismantles communities from the inside: toxicity, harassment, recruitment, radicalisation.
+          </p>
+          <p>
+            Game designers and extremist recruiters are solving the same problem. How do you engage a person, hold their attention, create emotional investment, and motivate increasingly committed action? Game designers do this to create entertainment. Extremist recruiters do this to create soldiers. Understanding the parallel is what makes it possible to design community tools that protect the first case without enabling the second.
+          </p>
+        </div>
+
+        <div class="pvebot-cta">
+          <a href="#apply" class="btn btn-primary">Apply to invite PvEBot &#8594;</a>
+          <a href="#research" class="btn btn-secondary">Read the research &#8595;</a>
+        </div>
+
+        <div class="page-toc">
+          <strong>On this page</strong>
+          <a href="#problem">The problem</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#response">Graduated response</a>
+          <a href="#research">Research foundation</a>
+          <a href="#education">For schools</a>
+          <a href="#deploy">Data sovereignty</a>
+          <a href="#apply">Apply to invite</a>
+          <a href="#self-host">Self-host</a>
+          <a href="#publications">Publications</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- The problem -->
+    <section class="section section--alt anchor-target" id="problem">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--pvebot">&#128202; The Problem</div>
+          <h2 class="section-title">Gaming communities are being exploited at scale</h2>
+          <p class="section-description">International research by the Royal United Services Institute's Extremism and Gaming Research Network surveyed 2,200+ gamers across seven countries. The findings are direct.</p>
+        </div>
+
+        <div class="stat-grid-4">
+          <div class="stat-card pvebot-stat">
+            <div class="stat-number">1&nbsp;in&nbsp;3</div>
+            <div class="stat-label">Gamers exposed to extremist content within gaming spaces</div>
+          </div>
+          <div class="stat-card pvebot-stat">
+            <div class="stat-number">1&nbsp;in&nbsp;4</div>
+            <div class="stat-label">Targeted by active recruitment attempts</div>
+          </div>
+          <div class="stat-card pvebot-stat">
+            <div class="stat-number">50%+</div>
+            <div class="stat-label">Of female gamers facing gender-based harassment</div>
+          </div>
+          <div class="stat-card pvebot-stat">
+            <div class="stat-number">~10%</div>
+            <div class="stat-label">Axelrod threshold: the proportion of toxic actors at which community cooperation collapses</div>
+          </div>
+        </div>
+
+        <div class="stat-grid-4">
+          <div class="stat-card">
+            <div class="stat-number" style="color: var(--color-text-light);">60%</div>
+            <div class="stat-label">Gamers who spend less when exposed to toxicity</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" style="color: var(--color-text-light);">60%</div>
+            <div class="stat-label">Quit communities entirely</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" style="color: var(--color-text-light);">70%</div>
+            <div class="stat-label">Avoid interactions with other players</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" style="color: var(--color-text-light);">$760M</div>
+            <div class="stat-label">NZ game sector revenue (2024/2025); 95% exported</div>
+          </div>
+        </div>
+
+        <p style="font-size: var(--font-size-lg); color: var(--color-text-light); line-height: 1.7; margin-top: var(--space-8);">
+          <a href="https://static.rusi.org/radicalisation-through-gaming-role-of-gendered-social-identity-whr-december-2024.pdf" target="_blank" rel="noopener">RUSI's research</a> identifies three mechanisms of exploitation. First, direct use of games for propaganda through <a href="https://globalextremism.org/post/how-the-far-right-spreads-hate-through-gaming/" target="_blank" rel="noopener">custom modifications</a> in Arma&nbsp;3, GTA&nbsp;V, and Roblox. Second, gaming-adjacent platforms (Discord especially) used as trust-rich recruitment infrastructure, documented in <a href="https://icct.nl/publication/fighting-extremism-gaming-platforms-set-design-principles-develop-comprehensive-pcve" target="_blank" rel="noopener">ICCT's design principles</a>. Third, the <a href="https://doi.org/10.1080/09546553.2022.2064746" target="_blank" rel="noopener">gamification of real-world violence</a>: scoreboards, achievement language, and live-streaming applied to actual attacks. These mechanisms reinforce each other rather than operate in sequence.
+        </p>
+
+        <p style="font-size: var(--font-size-lg); color: var(--color-text-light); line-height: 1.7;">
+          The <strong>Charlie Kirk assassination attempt</strong> (September 2025) demonstrates a pattern the research calls Mixed, Unclear, Unstable (MUU) ideology. Bullet casings were inscribed with references to the game <em>Helldivers&nbsp;2</em>, the anti-fascist song <em>Bella Ciao</em>, and internet meme language. The perpetrator's motive was simultaneously sincere and ironic. Traditional analysis frameworks assume a coherent ideological identity and cannot parse attacks of this kind. Subcultural literacy and pattern-based detection become essential.
+        </p>
+
+        <p style="font-size: var(--font-size-lg); color: var(--color-text-light); line-height: 1.7;">
+          For the New Zealand game development sector, the economic stakes are direct. The sector generated NZD&nbsp;$760&nbsp;million in 2024/2025, a 38.6&nbsp;percent year-on-year increase, employing 1,418 FTEs and deriving 95&nbsp;percent of revenue from international exports. Community health is the commercial model. When toxic actors exceed Axelrod's ~10% threshold, cooperative behaviour collapses. Communities do not degrade gradually; they collapse. The RUSI attrition numbers (60/60/70) show the collapse already in progress in communities without active moderation. PvEBot is infrastructure for preventing that collapse.
+        </p>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section anchor-target" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--pvebot">&#129504; How It Works</div>
+          <h2 class="section-title">Seven rule-based detection analysers</h2>
+          <p class="section-description">PvEBot analyses every incoming message through seven analysers running in parallel. Each produces a severity score, a confidence score, and structured indicators. Scores combine via configurable weights into a risk level: <em>none, low, medium, high, critical</em>. Message content is hashed with SHA-256 before storage; the original text cannot be recovered.</p>
+        </div>
+
+        <div class="analyser-grid">
+          <div class="analyser-card">
+            <div class="weight">Weight 1.0 &middot; Baseline</div>
+            <h4>Keyword</h4>
+            <p>Hate speech, slurs, extremist terminology including coded numeric patterns such as 88 and 1488.</p>
+          </div>
+          <div class="analyser-card">
+            <div class="weight">Weight 1.2</div>
+            <h4>Pattern</h4>
+            <p>Regex-based recruitment language, radicalisation rhetoric, platform migration links to Telegram, Signal, Gab, Rumble, BitChute, Odysee.</p>
+          </div>
+          <div class="analyser-card">
+            <div class="weight">Context-aware</div>
+            <h4>Behavioural</h4>
+            <p>Message-frequency spikes, channel hopping, DM solicitation, rapid escalation, new-account risk.</p>
+          </div>
+          <div class="analyser-card">
+            <div class="weight">Gaming-specific</div>
+            <h4>Contextual</h4>
+            <p>Distinguishes legitimate game discussion (where "kill", "destroy", "headshot" are routine vocabulary) from non-game violent language by analysing channel context and conversation flow. Critical for reducing false positives in gaming communities.</p>
+          </div>
+          <div class="analyser-card">
+            <div class="weight">Weight 1.5</div>
+            <h4>Post-Ironic Violence</h4>
+            <p>The novel contribution of this detection system. Detects violence normalised through layers of irony, humour, and gaming language that maintain plausible deniability while the content functions as sincere desensitisation or signalling. This is the pattern illustrated by the Charlie Kirk case.</p>
+          </div>
+          <div class="analyser-card">
+            <div class="weight">Weight 1.8 &middot; Highest</div>
+            <h4>Recruitment</h4>
+            <p>Explicit recruitment language, pressure tactics, isolation techniques, platform migration invitations. Weighted highest because early-pipeline intervention is the most effective point to disrupt radicalisation.</p>
+          </div>
+          <div class="analyser-card">
+            <div class="weight">Weight 1.6</div>
+            <h4>Identity Fusion</h4>
+            <p>In-group cohesion language and willingness-to-fight rhetoric. Dehumanisation combined with expressed willingness to use violence is the combination most predictive of progression to violent action.</p>
+          </div>
+        </div>
+
+        <p style="font-size: var(--font-size-base); color: var(--color-text-light); line-height: 1.7; margin-top: var(--space-8);">
+          <strong>GenAI is opt-in and defaults to off.</strong> For studios that choose AI-enhanced detection, locally hosted open-source models (Llama 3.2 via Ollama) are the recommended path, keeping all inference data within Aotearoa New Zealand. Cloud providers (Anthropic Claude, OpenAI) remain available but send community data to overseas servers and are not the default.
+        </p>
+
+        <p style="font-size: var(--font-size-base); color: var(--color-text-light); line-height: 1.7;">
+          A 168-hour (one week) half-life decay is applied to accumulated risk scores. Past behaviour informs assessment but does not define the individual permanently. This <em>temporal forgiveness</em> is a prerequisite for any genuine rehabilitation framework.
+        </p>
+      </div>
+    </section>
+
+    <!-- Graduated response -->
+    <section class="section section--alt anchor-target" id="response">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--pvebot">&#9881;&#65039; Graduated Response</div>
+          <h2 class="section-title">Seven levels, restorative by design</h2>
+          <p class="section-description">Every response with material consequences for a person's community membership always involves a human moderator. Levels 0&ndash;2 are automated. Levels 3&ndash;6 require moderator approval. Every user-facing message is grounded in Self-Determination Theory and Te Ao Māori values.</p>
+        </div>
+
+        <div class="table-wrap" style="overflow-x: auto;">
+          <table class="level-table">
+            <thead>
+              <tr>
+                <th>Level</th>
+                <th>Response</th>
+                <th>Approval</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="level-badge lvl-0">L0</span></td>
+                <td><strong>Monitoring</strong></td>
+                <td><span class="auto-tag auto">Automatic</span></td>
+                <td>Passive observation. Pattern data logged for trend analysis. No user-facing action.</td>
+              </tr>
+              <tr>
+                <td><span class="level-badge lvl-1">L1</span></td>
+                <td><strong>Nudge</strong></td>
+                <td><span class="auto-tag auto">Automatic</span></td>
+                <td>Subtle prosocial content introduced into the channel without identifying the triggering user.</td>
+              </tr>
+              <tr>
+                <td><span class="level-badge lvl-2">L2</span></td>
+                <td><strong>Warning</strong></td>
+                <td><span class="auto-tag auto">Automatic</span></td>
+                <td>Private message referencing community guidelines. Framed as a choice (Mana Motuhake).</td>
+              </tr>
+              <tr>
+                <td><span class="level-badge lvl-3">L3</span></td>
+                <td><strong>Restriction</strong></td>
+                <td><span class="auto-tag mod">Moderator</span></td>
+                <td>Reduced channel access. Participation narrowed, not eliminated.</td>
+              </tr>
+              <tr>
+                <td><span class="level-badge lvl-4">L4</span></td>
+                <td><strong>Mute</strong></td>
+                <td><span class="auto-tag mod">Moderator</span></td>
+                <td>Temporary communication restriction. Can read but not post.</td>
+              </tr>
+              <tr>
+                <td><span class="level-badge lvl-5">L5</span></td>
+                <td><strong>Kick</strong></td>
+                <td><span class="auto-tag mod">Moderator</span></td>
+                <td>Removal with the option to rejoin after cooldown. Return pathway included.</td>
+              </tr>
+              <tr>
+                <td><span class="level-badge lvl-6">L6</span></td>
+                <td><strong>Ban</strong></td>
+                <td><span class="auto-tag mod">Moderator</span></td>
+                <td>Categorised ban with a structured rehabilitation pathway assigned (toxic, abusive, extremist, or external referral for illegal activity).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mana-callout">
+          <strong>Example Level 2 warning text:</strong>
+          "This community respects everyone's mana, their inherent dignity and worth. The language in your recent message diminishes the mana of others. You have the mana to choose differently."
+        </div>
+
+        <h3 style="font-size: var(--font-size-xl); font-weight: 700; margin-top: var(--space-10); margin-bottom: var(--space-4);">Self-Determination Theory &amp; Te Ao Māori</h3>
+        <p style="font-size: var(--font-size-base); color: var(--color-text-light); line-height: 1.7;">
+          Every PvEBot message supports the three psychological needs identified by <a href="https://doi.org/10.4135/9781446249215.n21" target="_blank" rel="noopener">Self-Determination Theory</a> (autonomy, competence, relatedness), mapped to Te Ao Māori values. Messages perceived as controlling or punitive produce reactance; messages perceived as autonomy-supportive produce internalisation. The framing is the mechanism by which the intervention works.
+        </p>
+
+        <div class="values-grid">
+          <div class="value-card">
+            <div class="value-title">Autonomy &middot; Mana Motuhake</div>
+            <div class="value-meaning">Warnings framed as choices. The individual has the capacity to choose differently. Language emphasises agency over compliance.</div>
+          </div>
+          <div class="value-card">
+            <div class="value-title">Competence &middot; Pūmanawa</div>
+            <div class="value-meaning">Past positive contributions explicitly acknowledged. The individual is reminded of their demonstrated capacity for constructive engagement.</div>
+          </div>
+          <div class="value-card">
+            <div class="value-title">Relatedness &middot; Whanaungatanga</div>
+            <div class="value-meaning">Community connection maintained during restrictions. The individual is still a member, even when access is limited.</div>
+          </div>
+        </div>
+
+        <h3 style="font-size: var(--font-size-xl); font-weight: 700; margin-top: var(--space-10); margin-bottom: var(--space-4);">Four rehabilitation pathways</h3>
+        <p style="font-size: var(--font-size-base); color: var(--color-text-light); line-height: 1.7; margin-bottom: var(--space-6);">
+          Level 6 bans are categorised, not generic. Each category has a structured pathway for genuine return, built on the research finding that <em>radicalisation happens through relationships, and de-radicalisation must also happen through relationships</em>.
+        </p>
+
+        <div class="grid-2">
+          <div class="card card--accent-left" style="border-left-color: #22c55e;">
+            <div class="card-title"><strong>Toxic behaviour</strong></div>
+            <div class="card-text">Cooldown. A waiting period, then written acknowledgement of the specific harm caused, then probationary return with enhanced monitoring.</div>
+          </div>
+          <div class="card card--accent-left" style="border-left-color: #f97316;">
+            <div class="card-title"><strong>Abusive behaviour</strong></div>
+            <div class="card-text">Guided return. Reflection, limited access to low-risk channels only, demonstrable positive contribution, then full access with extended monitoring.</div>
+          </div>
+          <div class="card card--accent-left" style="border-left-color: #ef4444;">
+            <div class="card-title"><strong>Extremist content</strong></div>
+            <div class="card-text">Mentored rehabilitation. A trained volunteer mentor is assigned and works with the individual to address the unmet SDT needs that made extremist content appealing. Guided conversations, supervised participation, graduated return, ongoing check-ins.</div>
+          </div>
+          <div class="card card--accent-left" style="border-left-color: #1a1a1a;">
+            <div class="card-title"><strong>Illegal activity</strong></div>
+            <div class="card-text">No community return pathway. Violence threats go to NZ Police. Objectionable material goes to the Department of Internal Affairs. Harmful digital communications go to Netsafe. Referral is the terminal action within PvEBot.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research foundation -->
+    <section class="section anchor-target" id="research">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--pvebot">&#128218; Research Foundation</div>
+          <h2 class="section-title">What the research establishes</h2>
+          <p class="section-description">PvEBot is the tool; the research is the reason it exists. The design is documented in the DPMC research report (reference PVE-2026-RPT-001, UNCLASSIFIED) and its four appendices.</p>
+        </div>
+
+        <div class="research-card" style="padding: var(--space-8); margin-bottom: var(--space-8);">
+          <h3 style="font-size: var(--font-size-xl); font-weight: 700; margin-bottom: var(--space-4);">The game design / extremist recruitment parallel</h3>
+          <p style="color: var(--color-text-light); line-height: 1.7; margin-bottom: var(--space-4);">
+            The core research contribution is the observation that game designers and extremist recruiters solve the same engagement problem. Both build in-group identity, provide clear enemy framing, structure progression, reward escalating commitment, and exploit the three core psychological needs identified by Self-Determination Theory: autonomy, competence, and relatedness. The difference is purpose. Game designers create entertainment. Recruiters create soldiers. The mechanics are the same.
+          </p>
+          <p style="color: var(--color-text-light); line-height: 1.7;">
+            This parallel explains why gaming-adjacent platforms (Discord especially) are such effective recruitment infrastructure. The trust-rich environment of a shared gaming interest provides cover for relationships that can later be redirected. It also explains why the counter-intervention must operate at the same mechanical level: addressing the unmet needs that made extremist content appealing, rather than simply removing the content.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="research-card">
+            <h3>Appendix A: RUSI statistics</h3>
+            <p>Findings from the Royal United Services Institute Extremism and Gaming Research Network. Mixed-methods study of 2,200+ gamers across seven countries. One-third exposed to extremist content. One-quarter targeted by active recruitment. 50%+ of female gamers facing gender-based harassment. The Axelrod 10% cooperation-collapse threshold applied to toxic communities.</p>
+          </div>
+          <div class="research-card">
+            <h3>Appendix B: Detection architecture</h3>
+            <p>Technical specification of the seven-analyser detection system, parallel execution model, weighted scoring, 168-hour decay, SHA-256 content hashing. The contextual gaming analyser is the critical differentiator from general-purpose moderation tools. It distinguishes gameplay vocabulary from genuine threat language.</p>
+          </div>
+          <div class="research-card">
+            <h3>Appendix C: Rehabilitation pathways</h3>
+            <p>The seven-level graduated response, SDT and Te Ao Māori framing, four categorised rehabilitation pathways (toxic cooldown, abusive guided return, mentored extremist rehabilitation, external referral for illegal activity). Restorative rather than punitive by design.</p>
+          </div>
+          <div class="research-card">
+            <h3>Appendix D: Deployment model</h3>
+            <p>NZ data sovereignty under the Privacy Act 2020. Catalyst Cloud (Wellington datacentres, NZ Government-approved) as the recommended host. Designed to apply beyond gaming to schools, youth organisations, sports clubs, and professional associations.</p>
+          </div>
+        </div>
+
+        <div class="card card--accent-left card--academic" style="padding: var(--space-6); margin-top: var(--space-8);">
+          <div class="card-title">Policy alignment</div>
+          <div class="card-text">
+            PvEBot and the supporting educational content align with all three pillars of the <a href="https://www.dpmc.govt.nz/our-programmes/national-security/counter-terrorism" target="_blank" rel="noopener">DPMC Counter-Terrorism and Violent Extremism Strategy</a> (December&nbsp;2025): identifying and understanding threats, preventing and reducing radicalisation risk, and protecting people, places, and infrastructure. It aligns with the <a href="https://www.dpmc.govt.nz/our-programmes/national-security/counter-terrorism/preventing-and-countering-violent-extremism" target="_blank" rel="noopener">PCVE Strategic Framework</a>'s whole-of-society approach. It complements rather than replaces the work of NZ Police, the Department of Internal Affairs, Netsafe, and <a href="https://hwt.ac.nz/" target="_blank" rel="noopener">He Whenua Taurikura</a> (the NZ National Centre of Research Excellence for Preventing and Countering Violent Extremism).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section class="section section--alt anchor-target" id="education">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--pvebot">&#127891; For Schools</div>
+          <h2 class="section-title">Te Mataiaho-aligned curriculum</h2>
+          <p class="section-description">A companion education programme for New Zealand schools, structured across five phases of learning and aligned with the <a href="https://www.education.govt.nz/our-work/changes-in-education/curriculum-changes/te-mataiaho/" target="_blank" rel="noopener">Te Mataiaho</a> curriculum refresh. Activity-first pedagogy: students experience the dynamics through a game or exercise before any theory is introduced.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card card--accent-left card--academic">
+            <div class="card-title">Years 1&ndash;3 &middot; Foundations</div>
+            <div class="card-text">Kindness online and offline. Good friends, good games. Kind/unkind behaviour as a foundation.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title">Years 4&ndash;6 &middot; Awareness</div>
+            <div class="card-text">Fair play in games and life. Standing up, not standing by. Digital footprints. Fairness and bystander action.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title">Years 7&ndash;8 &middot; Critical thinking</div>
+            <div class="card-text">Online communities. Pressure and persuasion. Bystander to upstander. SDT framework named explicitly.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title">Years 9&ndash;10 &middot; Analysis &amp; agency</div>
+            <div class="card-text">Game design and manipulation. Identity and belonging. Critical media literacy. SDT used as an analytical tool.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title">Years 11&ndash;13 &middot; Systems &amp; action</div>
+            <div class="card-text">Radicalisation pathways. Designing safe communities. Systems thinking and extremism. Assessed against NCEA standards AS&nbsp;92050, AS&nbsp;92051, AS&nbsp;91599, and US&nbsp;30910.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title">Six Animal Avatars model</div>
+            <div class="card-text">A structured group-work tool from Years 7&ndash;8 upward. Six roles (Bear, Wolf, Cat, Puppy, Owl, Rabbit) map to SDT dimensions, giving students direct experience of the competencies that extremist recruiters exploit. Free for NZ state and state-integrated schools.</div>
+          </div>
+        </div>
+
+        <p style="font-size: var(--font-size-base); color: var(--color-text-light); line-height: 1.7; margin-top: var(--space-8);">
+          The curriculum connects bullying and radicalisation as manifestations of the same group dynamics: exclusion, status competition, escalation, in-group and out-group formation. It develops <em>game design literacy</em>, the ability to see engagement mechanics operating beneath games, social platforms, and recruitment campaigns. Te Ao Māori values (Manaaki, Whanaungatanga, Mana Motuhake, Pūmanawa, Pakiki, Auahatanga, Kaitiakitanga, Kotahitanga) run through every module as a lens for learning, not as a separate cultural module.
+        </p>
+
+        <div class="card card--accent-left" style="border-left-color: var(--color-pvebot); margin-top: var(--space-8); padding: var(--space-6);">
+          <div class="card-title">Published exemplar modules</div>
+          <div class="card-text">
+            Three modules have been prepared as complete classroom-ready exemplars, representing the Foundation, Critical-thinking, and Systems &amp; action phases respectively:
+            <ul style="margin: var(--space-3) 0 0; padding-left: 1.2em; line-height: 1.8;">
+              <li><strong>CL1.1 &middot; Kindness Online</strong>, Years 1&ndash;3 (Foundations)</li>
+              <li><strong>CL4.1 &middot; Online Communities</strong>, Years 7&ndash;8 (Critical thinking)</li>
+              <li><strong>CL7.3 &middot; Systems Thinking &amp; Extremism</strong>, Years 11&ndash;13 (Systems &amp; action)</li>
+            </ul>
+          </div>
+        </div>
+
+        <p style="font-size: var(--font-size-base); color: var(--color-text-light); line-height: 1.7; margin-top: var(--space-6);">
+          Teaching materials, including the exemplar modules and a <em>Teacher's Guide</em>, are available on request to New Zealand schools and kura. The curriculum complements existing NZ resources such as Netsafe's Kete, Keep It Real Online, and the work of He Whenua Taurikura.
+        </p>
+      </div>
+    </section>
+
+    <!-- Deployment & data sovereignty -->
+    <section class="section anchor-target" id="deploy">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--pvebot">&#127467;&#127489; Data Sovereignty</div>
+          <h2 class="section-title">Built to stay in Aotearoa</h2>
+          <p class="section-description">PvEBot is designed to run entirely within New Zealand. All community moderation data remains subject to NZ jurisdiction and the Privacy Act&nbsp;2020.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card card--accent-left" style="border-left-color: var(--color-pvebot);">
+            <div class="card-title">NZ-only hosting</div>
+            <div class="card-text">Catalyst Cloud, Wellington. NZ Government certified. Three datacentres in the Wellington/Porirua region.</div>
+          </div>
+          <div class="card card--accent-left" style="border-left-color: var(--color-pvebot);">
+            <div class="card-title">No content storage</div>
+            <div class="card-text">SHA-256 hashes only. Original message text cannot be recovered. Even in a breach, message content is not exposed. Structured detection metadata is kept; raw content is not.</div>
+          </div>
+          <div class="card card--accent-left" style="border-left-color: var(--color-pvebot);">
+            <div class="card-title">Privacy Act 2020</div>
+            <div class="card-text">Information Privacy Principles applied as binding constraints. Configurable data retention with automatic purging. Per-guild data isolation enforced.</div>
+          </div>
+        </div>
+
+        <p style="font-size: var(--font-size-base); color: var(--color-text-light); line-height: 1.7; margin-top: var(--space-8);">
+          The architecture applies well beyond gaming. School Discord servers, sports clubs, youth organisations such as Scouting, Cadets, and Guides, and professional associations are all communities vulnerable to the same dynamics and all suitable deployment targets.
+        </p>
+      </div>
+    </section>
+
+    <!-- Apply -->
+    <section class="section section--alt anchor-target" id="apply">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--pvebot">&#128231; Apply to invite</div>
+          <h2 class="section-title">PvEBot is invite-only during the pilot</h2>
+          <p class="section-description">During the research pilot phase, PvEBot runs on a single maintainer-hosted instance. Applications are reviewed manually. Approved communities receive a per-guild invite link by return email.</p>
+        </div>
+
+        <div class="grid-2" style="margin-bottom: var(--space-8);">
+          <div class="card card--accent-left" style="border-left-color: var(--color-pvebot);">
+            <div class="card-title">What we look for</div>
+            <div class="card-text">
+              <ul style="margin: 0; padding-left: 1.2em; line-height: 1.8;">
+                <li>A community with an identifiable purpose and active moderator team</li>
+                <li>At least one admin who has read the research context on this page</li>
+                <li>A commitment to the graduated response framework (no "ban everything" approaches)</li>
+                <li>Willingness to provide feedback during the pilot</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card card--accent-left" style="border-left-color: var(--color-pvebot);">
+            <div class="card-title">What to expect</div>
+            <div class="card-text">
+              <ul style="margin: 0; padding-left: 1.2em; line-height: 1.8;">
+                <li>Manual review, typically within two weeks</li>
+                <li>A per-guild OAuth invite link restricted to your server only</li>
+                <li>Your server added to the bot's allowlist (required; the bot will otherwise leave)</li>
+                <li>Direct email contact for questions and issues</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <form class="apply-form" action="mailto:simon.mccallum@gmail.com" method="POST" enctype="text/plain">
+          <input type="hidden" name="subject" value="PvEBot Invite Application">
+
+          <label for="community_name">Community name</label>
+          <input type="text" id="community_name" name="community_name" required>
+
+          <label for="discord_server_id">Discord server (guild) ID</label>
+          <input type="text" id="discord_server_id" name="discord_server_id" required>
+          <div class="hint">Enable Developer Mode in Discord (User Settings → Advanced), right-click the server icon, and copy the numeric ID.</div>
+
+          <label for="admin_handle">Admin Discord handle</label>
+          <input type="text" id="admin_handle" name="admin_handle" placeholder="e.g. simon#1234" required>
+
+          <label for="contact_email">Contact email</label>
+          <input type="email" id="contact_email" name="contact_email" required>
+
+          <label for="member_count">Approximate member count</label>
+          <input type="number" id="member_count" name="member_count" min="1" required>
+
+          <label for="moderator_count">Active moderators</label>
+          <input type="number" id="moderator_count" name="moderator_count" min="0" required>
+
+          <label for="purpose">Community purpose &amp; why you want PvEBot</label>
+          <textarea id="purpose" name="purpose" required placeholder="What kind of community is this? What moderation challenges are you facing that PvEBot could help with?"></textarea>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="agree_pilot" name="agree_pilot" required>
+            <label for="agree_pilot">I understand that PvEBot is a research pilot, that it may be removed at the maintainer's discretion, and that my community's participation contributes to the research. I have read the graduated response framework above.</label>
+          </div>
+
+          <button type="submit">Send application</button>
+        </form>
+
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-muted); line-height: 1.6; margin-top: var(--space-6);">
+          Submitting the form opens your default email client with the application as plain text. If the form does not work for you, please email <a href="mailto:simon.mccallum@gmail.com">simon.mccallum@gmail.com</a> directly with the same information.
+        </p>
+      </div>
+    </section>
+
+    <!-- Self-host -->
+    <section class="section anchor-target" id="self-host">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--pvebot">&#128295; Self-host</div>
+          <h2 class="section-title">For developers who want to run their own instance</h2>
+          <p class="section-description">PvEBot is open source. If you want to run your own instance for data sovereignty, sensitivity, or customisation reasons, the architecture is designed for it.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="research-card">
+            <h3>Source &amp; docs</h3>
+            <p>TypeScript + Discord.js 14 + better-sqlite3. The repository is currently private during the pilot; request access through the application form above if you want to self-host, and include your use case. Docs include <code>DEPLOYMENT.md</code>, a full detection-architecture specification, rehabilitation-pathway definitions in YAML, and sample Catalyst Cloud configuration.</p>
+          </div>
+          <div class="research-card">
+            <h3>Recommended stack</h3>
+            <p>Catalyst Cloud (Wellington) as the host. Ollama running Llama&nbsp;3.2 for the optional GenAI layer, keeping inference data within NZ infrastructure. SQLite for per-guild storage. Docker Compose for orchestration.</p>
+          </div>
+        </div>
+
+        <h3 style="font-size: var(--font-size-xl); font-weight: 700; margin-top: var(--space-10); margin-bottom: var(--space-4);">Bot listings &amp; access control</h3>
+        <p style="font-size: var(--font-size-base); color: var(--color-text-light); line-height: 1.7; margin-bottom: var(--space-4);">
+          If you run PvEBot yourself, you will face the same problem that the hosted pilot faces: how to control who can add the bot. A single maintainer cannot support unlimited communities. The recommended layered approach:
+        </p>
+
+        <ol style="font-size: var(--font-size-base); color: var(--color-text-light); line-height: 1.8; padding-left: 1.4em;">
+          <li><strong>Discord Developer Portal → Bot → "Public Bot" = OFF.</strong> The single biggest lever. Only the bot owner can generate OAuth invites, and per-guild <code>guild_id</code> parameters restrict a link to a single target server.</li>
+          <li><strong>Guild allowlist in the bot code.</strong> PvEBot ships with a <code>GUILD_ALLOWLIST</code> environment variable. Non-allowlisted guilds receive a one-time "how to apply" message and the bot leaves. Empty allowlist = allow all (useful for local development).</li>
+          <li><strong>Application form.</strong> A public form (mailto-based, as on this page) captures the information needed to make an allow/deny decision before the invite link is issued.</li>
+          <li><strong>Listing, when ready.</strong> The <em>Discord App Directory</em> is the recommended first listing: in-client discovery, built-in verification process, and the 75-guild verification threshold provides a natural pause point to re-assess capacity. <em>discordbotlist.com</em> is an acceptable secondary listing. <em>top.gg</em>, <em>bots.gg</em>, and <em>disforge</em> are not recommended for invite-only research tools, because the engagement model attracts indiscriminate server owners and produces a large support burden.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Publications -->
+    <section class="section section--alt anchor-target" id="publications">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label section-label--pvebot">&#128221; Publications</div>
+          <h2 class="section-title">Source research &amp; references</h2>
+          <p class="section-description">The research foundations behind PvEBot draw on peer-reviewed and government-published sources.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://static.rusi.org/radicalisation-through-gaming-role-of-gendered-social-identity-whr-december-2024.pdf" target="_blank" rel="noopener">White et al. (2024). Radicalisation through Gaming. RUSI</a></div>
+            <div class="card-text">The foundational empirical work on the gaming-extremism nexus. Mixed-methods study of 2,200+ gamers across seven countries by the Royal United Services Institute Extremism and Gaming Research Network.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title">Axelrod, R. (1984). <em>The Evolution of Cooperation</em></div>
+            <div class="card-text">The cooperation-collapse threshold (~10% defector proportion) applied to toxic community behaviour in the DPMC research. Basic Books, New York.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://doi.org/10.4135/9781446249215.n21" target="_blank" rel="noopener">Deci &amp; Ryan (2012). Self-Determination Theory</a></div>
+            <div class="card-text">The psychological framework underpinning the graduated response language. Autonomy, competence, and relatedness are the three core needs whose exploitation is central to both game engagement and extremist recruitment.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://www.dpmc.govt.nz/our-programmes/national-security/counter-terrorism" target="_blank" rel="noopener">DPMC Counter-Terrorism &amp; Violent Extremism Strategy (2025)</a></div>
+            <div class="card-text">The New Zealand whole-of-society framework that PvEBot and the supporting curriculum align to. Department of the Prime Minister and Cabinet.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://doi.org/10.3389/fcomm.2022.1007128" target="_blank" rel="noopener">Kowert, Martel &amp; Swann (2022). Identity fusion in gaming cultures</a></div>
+            <div class="card-text">Frontiers in Communication. The empirical foundation for the identity-fusion analyser. Documents how gaming subcultures form the in-group cohesion that extremist recruiters exploit.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://globalextremism.org/post/how-the-far-right-spreads-hate-through-gaming/" target="_blank" rel="noopener">GPAHE: How the Far-Right Spreads Hate through Gaming</a></div>
+            <div class="card-text">Global Project Against Hate and Extremism. Documents custom modifications and platform-level recruitment in mainstream titles including Roblox, Minecraft, and Arma&nbsp;3.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://icct.nl/publication/fighting-extremism-gaming-platforms-set-design-principles-develop-comprehensive-pcve" target="_blank" rel="noopener">Hartgers &amp; Leidig (2023). Fighting Extremism on Gaming Platforms</a></div>
+            <div class="card-text">International Centre for Counter-Terrorism. Design principles for comprehensive P/CVE strategies on gaming and gaming-adjacent platforms. Source for the layered detection-and-response model.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://doi.org/10.1080/09546553.2022.2064746" target="_blank" rel="noopener">Lakhani &amp; Wiedlitzka (2023). Press F to Pay Respects</a></div>
+            <div class="card-text">Terrorism and Political Violence. Empirical exploration of the gamification mechanics in the Christchurch attack. Foundational evidence for the post-ironic violence analyser.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://doi.org/10.1177/15554120231167214" target="_blank" rel="noopener">Wells et al. (2024). Right-wing extremism in mainstream games</a></div>
+            <div class="card-text">Games and Culture. Literature review of right-wing extremism in mainstream gaming spaces. Establishes the GamerGate-to-alt-right trajectory.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://doi.org/10.1177/1742715018793744" target="_blank" rel="noopener">Bezio (2018). Ctrl-Alt-Del: GamerGate as a precursor to the alt-right</a></div>
+            <div class="card-text">Leadership. Documents the GamerGate harassment campaign as the rehearsal ground for organised right-wing political mobilisation through gaming communities.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://doi.org/10.1177/1461444815608807" target="_blank" rel="noopener">Massanari (2017). #Gamergate and The Fappening</a></div>
+            <div class="card-text">New Media &amp; Society. How Reddit's algorithm, governance, and culture support toxic technocultures. Establishes the role of platform design in amplification.</div>
+          </div>
+          <div class="card card--accent-left card--academic">
+            <div class="card-title"><a href="https://christchurchattack.royalcommission.nz/" target="_blank" rel="noopener">Royal Commission of Inquiry into the Christchurch attacks (2020)</a></div>
+            <div class="card-text"><em>Ko tō tātou kāinga tēnei</em>. The NZ Royal Commission report establishing the policy and research context for preventing violent extremism in Aotearoa.</div>
+          </div>
+        </div>
+
+        <div class="card card--accent-left card--academic" style="padding: var(--space-8); margin-top: var(--space-8);">
+          <div class="card-title">Full research report</div>
+          <div class="card-text">The complete DPMC research report (reference PVE-2026-RPT-001, UNCLASSIFIED) with appendices A to D is the authoritative source for all figures, design decisions, and policy alignment on this page. A formal briefing to the Minister for the Digital Economy and Communications was prepared in parallel. Both documents are available on request for academic and policy use.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-text">&copy; 2026 Dr Simon McCallum. PvEBot is a research pilot. UNCLASSIFIED.</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="mailto:simon.mccallum@gmail.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
